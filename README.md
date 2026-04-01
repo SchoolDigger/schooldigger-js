@@ -11,20 +11,26 @@ npm install schooldigger
 ## Quick Start
 
 ```typescript
-import { SchoolsApi, SchoolsApiApiKeys } from 'schooldigger';
+import { Configuration, SchoolsApi } from 'schooldigger';
 
-const api = new SchoolsApi();
-api.setApiKey(SchoolsApiApiKeys.appID, 'YOUR_APP_ID');
-api.setApiKey(SchoolsApiApiKeys.appKey, 'YOUR_APP_KEY');
+const config = new Configuration({
+  apiKey: (name) => {
+    if (name === 'appID') return 'YOUR_APP_ID';
+    if (name === 'appKey') return 'YOUR_APP_KEY';
+    return '';
+  },
+});
+
+const api = new SchoolsApi(config);
 
 // Search schools in Washington state
-const { body } = await api.searchSchools('WA', 'Lincoln');
-for (const school of body.schoolList) {
+const result = await api.searchSchools({ st: 'WA', q: 'Lincoln' });
+for (const school of result.schoolList) {
   console.log(`${school.schoolName} — ${school.address.city}, ${school.address.state}`);
 }
 
 // Get a specific school by SchoolDigger ID
-const { body: detail } = await api.getSchool('530966001632');
+const detail = await api.getSchool({ id: '530966001632' });
 console.log(`Enrollment: ${detail.schoolYearlyDetails[0].numberOfStudents}`);
 ```
 

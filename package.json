@@ -1,6 +1,6 @@
 {
     "name": "schooldigger",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Official SDK for the SchoolDigger K-12 School Data API",
     "repository": {
         "type": "git",
@@ -17,23 +17,17 @@
         "school-rankings",
         "education-data"
     ],
-    "main": "dist/api.js",
-    "types": "dist/api.d.ts",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "module": "./dist/esm/index.js",
+    "sideEffects": false,
     "scripts": {
-        "clean": "rm -Rf node_modules/ *.js",
-        "build": "tsc",
-        "test": "npm run build && node dist/client.js"
+        "build": "tsc && tsc -p tsconfig.esm.json",
+        "prepare": "npm run build"
     },
     "author": "SchoolDigger / Claarware LLC <api@schooldigger.com>",
     "license": "MIT",
-    "dependencies": {
-        "bluebird": "^3.7.2",
-        "request": "^2.88.2"
-    },
     "devDependencies": {
-        "@types/bluebird": "^3.5.33",
-        "@types/node": "^12",
-        "@types/request": "^2.48.8",
         "typescript": "^4.0 || ^5.0"
     }
 }
