@@ -1,0 +1,64 @@
+name: Regenerate SDK
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (e.g., 1.1.0)'
+        required: true
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Java (required by openapi-generator)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install tools
+        run: npm install -g @openapitools/openapi-generator-cli swagger2openapi
+
+      - name: Download latest spec
+        run: curl -o swagger.json https://api.schooldigger.com/swagger/docs/v2.3
+
+      - name: Convert to OpenAPI 3.0
+        run: npx swagger2openapi swagger.json -o openapi-latest.json
+
+      - name: Apply patches
+        run: node patch-spec.js openapi-latest.json openapi-patched.json
+
+      - name: Generate SDK
+        run: |
+          openapi-generator-cli generate \
+            -i openapi-patched.json \
+            -g typescript-node \
+            -o . \
+            --additional-properties=npmName=schooldigger,npmVersion=${{ github.event.inputs.version }},supportsES6=true
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish
+
+      - name: Commit updated spec and generated code
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add openapi-patched.json api/ model/ api.ts
+          git commit -m "Regenerate SDK v${{ github.event.inputs.version }}" || echo "No changes to commit"
+          git push
