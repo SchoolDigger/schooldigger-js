@@ -29,7 +29,7 @@ jobs:
         run: npm install -g @openapitools/openapi-generator-cli swagger2openapi
 
       - name: Download latest spec
-        run: curl -o swagger.json https://api.schooldigger.com/swagger/docs/v2.3
+        run: curl -o swagger.json https://api.schooldigger.com/swagger/docs/v2.4
 
       - name: Convert to OpenAPI 3.0
         run: npx swagger2openapi swagger.json -o openapi-latest.json

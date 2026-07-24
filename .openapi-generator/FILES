@@ -1,7 +1,4 @@
-.gitignore
 .npmignore
-.openapi-generator-ignore
-README.md
 docs/APIAutocompleteDistrictResult.md
 docs/APIAutocompleteSchoolResult23.md
 docs/APIBoundary12.md

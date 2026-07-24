@@ -1,33 +1,21 @@
 {
-    "name": "schooldigger",
-    "version": "1.1.0",
-    "description": "Official SDK for the SchoolDigger K-12 School Data API",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/SchoolDigger/schooldigger-js.git"
-    },
-    "homepage": "https://developer.schooldigger.com",
-    "keywords": [
-        "schooldigger",
-        "schools",
-        "education",
-        "k-12",
-        "api",
-        "school-data",
-        "school-rankings",
-        "education-data"
-    ],
-    "main": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "module": "./dist/esm/index.js",
-    "sideEffects": false,
-    "scripts": {
-        "build": "tsc && tsc -p tsconfig.esm.json",
-        "prepare": "npm run build"
-    },
-    "author": "SchoolDigger / Claarware LLC <api@schooldigger.com>",
-    "license": "MIT",
-    "devDependencies": {
-        "typescript": "^4.0 || ^5.0"
-    }
+  "name": "schooldigger",
+  "version": "1.2.0",
+  "description": "OpenAPI client for schooldigger",
+  "author": "OpenAPI-Generator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "module": "./dist/esm/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc && tsc -p tsconfig.esm.json",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^4.0 || ^5.0"
+  }
 }
