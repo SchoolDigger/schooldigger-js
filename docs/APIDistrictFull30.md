@@ -1,11 +1,13 @@
 
-# APIDistrictFull21
+# APIDistrictFull30
 
+District detail record for API 3.0. Identical to 2.4 (APIDistrictFull21) except testScores, whose percent metrics  are a number or an APIReportedPercent object and whose rows are no longer limited to what the pre-2026 importers  produced (docs/suppressed-test-values-spec.md R6).
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`testScores` | [Array&lt;APITestScoreWrapper30&gt;](APITestScoreWrapper30.md)
 `districtID` | string
 `districtName` | string
 `phone` | string
@@ -27,15 +29,15 @@ Name | Type
 `county` | [APICounty](APICounty.md)
 `rankHistory` | [Array&lt;APILEARankHistory&gt;](APILEARankHistory.md)
 `districtYearlyDetails` | [Array&lt;APILEAYearlyDetail&gt;](APILEAYearlyDetail.md)
-`testScores` | [Array&lt;APITestScoreWrapper&gt;](APITestScoreWrapper.md)
 
 ## Example
 
 ```typescript
-import type { APIDistrictFull21 } from 'schooldigger'
+import type { APIDistrictFull30 } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
+  "testScores": null,
   "districtID": null,
   "districtName": null,
   "phone": null,
@@ -57,8 +59,7 @@ const example = {
   "county": null,
   "rankHistory": null,
   "districtYearlyDetails": null,
-  "testScores": null,
-} satisfies APIDistrictFull21
+} satisfies APIDistrictFull30
 
 console.log(example)
 
@@ -67,7 +68,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as APIDistrictFull21
+const exampleParsed = JSON.parse(exampleJSON) as APIDistrictFull30
 console.log(exampleParsed)
 ```
 

@@ -4,8 +4,8 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getDistrictRankings**](RankingsApi.md#getdistrictrankings) | **GET** /v2.4/rankings/districts/{st} | Returns a SchoolDigger district ranking list |
-| [**getSchoolRankings**](RankingsApi.md#getschoolrankings) | **GET** /v2.4/rankings/schools/{st} | Returns a SchoolDigger school ranking list |
+| [**getDistrictRankings**](RankingsApi.md#getdistrictrankings) | **GET** /v3.0/rankings/districts/{st} | Returns a SchoolDigger district ranking list |
+| [**getSchoolRankings**](RankingsApi.md#getschoolrankings) | **GET** /v3.0/rankings/schools/{st} | Returns a SchoolDigger school ranking list |
 
 
 

@@ -4,8 +4,8 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**autocompleteDistricts**](AutocompleteApi.md#autocompletedistricts) | **GET** /v2.4/autocomplete/districts | Returns a simple and quick list of districts for use in a client-typed autocomplete |
-| [**autocompleteSchools**](AutocompleteApi.md#autocompleteschools) | **GET** /v2.4/autocomplete/schools | Returns a simple and quick list of schools for use in a client-typed autocomplete |
+| [**autocompleteDistricts**](AutocompleteApi.md#autocompletedistricts) | **GET** /v3.0/autocomplete/districts | Returns a simple and quick list of districts for use in a client-typed autocomplete |
+| [**autocompleteSchools**](AutocompleteApi.md#autocompleteschools) | **GET** /v3.0/autocomplete/schools | Returns a simple and quick list of schools for use in a client-typed autocomplete |
 
 
 

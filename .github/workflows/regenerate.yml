@@ -29,7 +29,7 @@ jobs:
         run: npm install -g @openapitools/openapi-generator-cli swagger2openapi
 
       - name: Download latest spec
-        run: curl -o swagger.json https://api.schooldigger.com/swagger/docs/v2.4
+        run: curl -o swagger.json https://api.schooldigger.com/swagger/docs/v3.0
 
       - name: Convert to OpenAPI 3.0
         run: npx swagger2openapi swagger.json -o openapi-latest.json
@@ -41,7 +41,7 @@ jobs:
         run: |
           openapi-generator-cli generate \
             -i openapi-patched.json \
-            -g typescript-node \
+            -g typescript-fetch \
             -o . \
             --additional-properties=npmName=schooldigger,npmVersion=${{ github.event.inputs.version }},supportsES6=true
 
@@ -59,6 +59,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add openapi-patched.json api/ model/ api.ts
+          git add openapi-patched.json src/ docs/ package.json .openapi-generator/
           git commit -m "Regenerate SDK v${{ github.event.inputs.version }}" || echo "No changes to commit"
           git push

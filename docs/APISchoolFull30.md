@@ -1,11 +1,13 @@
 
-# APISchoolFull22
+# APISchoolFull30
 
+School detail record for API 3.0. Identical to 2.4 (APISchoolFull22) except testScores, whose percent metrics are  a number or an APIReportedPercent object and whose rows are no longer limited to what the pre-2026 importers  produced (docs/suppressed-test-values-spec.md R6).
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`testScores` | [Array&lt;APITestScoreWrapper30&gt;](APITestScoreWrapper30.md)
 `schoolid` | string
 `schoolName` | string
 `phone` | string
@@ -38,16 +40,16 @@ Name | Type
 `chronicAbsenteeismRates` | [Array&lt;APIChronicAbsenteeismRate&gt;](APIChronicAbsenteeismRate.md)
 `rankHistory` | [Array&lt;APIRankHistory&gt;](APIRankHistory.md)
 `rankMovement` | number
-`testScores` | [Array&lt;APITestScoreWrapper&gt;](APITestScoreWrapper.md)
 `schoolYearlyDetails` | [Array&lt;APIYearlyDemographics&gt;](APIYearlyDemographics.md)
 
 ## Example
 
 ```typescript
-import type { APISchoolFull22 } from 'schooldigger'
+import type { APISchoolFull30 } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
+  "testScores": null,
   "schoolid": null,
   "schoolName": null,
   "phone": null,
@@ -80,9 +82,8 @@ const example = {
   "chronicAbsenteeismRates": null,
   "rankHistory": null,
   "rankMovement": null,
-  "testScores": null,
   "schoolYearlyDetails": null,
-} satisfies APISchoolFull22
+} satisfies APISchoolFull30
 
 console.log(example)
 
@@ -91,7 +92,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as APISchoolFull22
+const exampleParsed = JSON.parse(exampleJSON) as APISchoolFull30
 console.log(exampleParsed)
 ```
 

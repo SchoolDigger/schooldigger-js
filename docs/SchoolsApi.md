@@ -4,18 +4,18 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getSchool**](SchoolsApi.md#getschool) | **GET** /v2.4/schools/{id} | Returns a detailed record for one school |
-| [**searchSchools**](SchoolsApi.md#searchschools) | **GET** /v2.4/schools | Returns a list of schools |
+| [**getSchool**](SchoolsApi.md#getschool) | **GET** /v3.0/schools/{id} | Returns a detailed record for one school |
+| [**searchSchools**](SchoolsApi.md#searchschools) | **GET** /v3.0/schools | Returns a list of schools |
 
 
 
 ## getSchool
 
-> APISchoolFull22 getSchool(id)
+> APISchoolFull30 getSchool(id, includeRanges)
 
 Returns a detailed record for one school
 
-Retrieve a school record from the SchoolDigger database
+Retrieve a school record from the SchoolDigger database. Version 3.0 adds includeRanges: with it, test-score percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent); without it the record is identical to v2.4.
 
 ### Example
 
@@ -39,6 +39,8 @@ async function example() {
   const body = {
     // string | The 12 digit School ID (e.g. 064215006903)
     id: id_example,
+    // boolean | true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\'range\', \'suppressed\', \'legacyImputed\' or \'derived\') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) (optional)
+    includeRanges: true,
   } satisfies GetSchoolRequest;
 
   try {
@@ -59,10 +61,11 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | The 12 digit School ID (e.g. 064215006903) | [Defaults to `undefined`] |
+| **includeRanges** | `boolean` | true &#x3D; return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\&#39;range\&#39;, \&#39;suppressed\&#39;, \&#39;legacyImputed\&#39; or \&#39;derived\&#39;) and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) &#x3D; the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**APISchoolFull22**](APISchoolFull22.md)
+[**APISchoolFull30**](APISchoolFull30.md)
 
 ### Authorization
 

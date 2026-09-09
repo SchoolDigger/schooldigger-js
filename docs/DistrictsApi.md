@@ -4,18 +4,18 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getDistrict**](DistrictsApi.md#getdistrict) | **GET** /v2.4/districts/{id} | Returns a detailed record for one district |
-| [**searchDistricts**](DistrictsApi.md#searchdistricts) | **GET** /v2.4/districts | Returns a list of districts |
+| [**getDistrict**](DistrictsApi.md#getdistrict) | **GET** /v3.0/districts/{id} | Returns a detailed record for one district |
+| [**searchDistricts**](DistrictsApi.md#searchdistricts) | **GET** /v3.0/districts | Returns a list of districts |
 
 
 
 ## getDistrict
 
-> APIDistrictFull21 getDistrict(id)
+> APIDistrictFull30 getDistrict(id, includeRanges)
 
 Returns a detailed record for one district
 
-Retrieve a single district record from the SchoolDigger database
+Retrieve a single district record from the SchoolDigger database. Version 3.0 adds includeRanges: with it, test-score percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent); without it the record is identical to v2.4.
 
 ### Example
 
@@ -39,6 +39,8 @@ async function example() {
   const body = {
     // string | The 7 digit District ID (e.g. 0642150)
     id: id_example,
+    // boolean | true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\'range\', \'suppressed\', \'legacyImputed\' or \'derived\') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) (optional)
+    includeRanges: true,
   } satisfies GetDistrictRequest;
 
   try {
@@ -59,10 +61,11 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | The 7 digit District ID (e.g. 0642150) | [Defaults to `undefined`] |
+| **includeRanges** | `boolean` | true &#x3D; return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\&#39;range\&#39;, \&#39;suppressed\&#39;, \&#39;legacyImputed\&#39; or \&#39;derived\&#39;) and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) &#x3D; the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**APIDistrictFull21**](APIDistrictFull21.md)
+[**APIDistrictFull30**](APIDistrictFull30.md)
 
 ### Authorization
 
