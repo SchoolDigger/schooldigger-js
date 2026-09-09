@@ -10,6 +10,8 @@ on:
 jobs:
   regenerate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # the last step commits the regenerated code back to main
     steps:
       - uses: actions/checkout@v4
 
