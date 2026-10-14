@@ -29,20 +29,14 @@ import {
 export interface APIBoundary12 {
     /**
      * Collection of one or more Google Maps encoded polylines representing the attendance boundary. IMPORTANT: Polyline strings are JSON-encoded with escaped backslashes (double backslashes). You must unescape before passing to Google Maps decoding functions. Multiple polylines represent districts/schools with non-contiguous boundary areas.
-     * @type {Array<APIPolyline>}
-     * @memberof APIBoundary12
      */
     polylineCollection?: Array<APIPolyline>;
     /**
      * Boundary as a WKT (Well-Known Text) MULTIPOLYGON string with explicit latitude/longitude vertices. Can be used directly with GIS software, PostGIS, or any system that accepts WKT geometry. Format: MULTIPOLYGON (((-122.27 47.77, ...)))
-     * @type {string}
-     * @memberof APIBoundary12
      */
     polylines?: string;
     /**
      * States whether there is a boundary available
-     * @type {boolean}
-     * @memberof APIBoundary12
      */
     hasBoundary?: boolean;
 }

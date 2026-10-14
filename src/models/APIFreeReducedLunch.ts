@@ -21,20 +21,14 @@ import { mapValues } from '../runtime';
 export interface APIFreeReducedLunch {
     /**
      * Absent when count and percent are usable; otherwise "communityEligibility", "repeated" or "aboveEnrollment"
-     * @type {string}
-     * @memberof APIFreeReducedLunch
      */
     status?: string;
     /**
      * Number of students eligible for free or reduced-price meals (absent for "repeated" and "aboveEnrollment")
-     * @type {number}
-     * @memberof APIFreeReducedLunch
      */
     count?: number;
     /**
      * Percent of enrolled students excluding pre-kindergarten (0-100, two decimals); absent when status is present
-     * @type {number}
-     * @memberof APIFreeReducedLunch
      */
     percent?: number;
 }

@@ -21,26 +21,18 @@ import { mapValues } from '../runtime';
 export interface APIDistrictSum {
     /**
      * The 7 digit SchoolDigger District id number
-     * @type {string}
-     * @memberof APIDistrictSum
      */
     districtID?: string;
     /**
      * 
-     * @type {string}
-     * @memberof APIDistrictSum
      */
     districtName?: string;
     /**
      * The URL to see the district details on SchoolDigger
-     * @type {string}
-     * @memberof APIDistrictSum
      */
     url?: string;
     /**
      * The URL to see the district in the SchoolDigger ranking list
-     * @type {string}
-     * @memberof APIDistrictSum
      */
     rankURL?: string;
 }

@@ -29,8 +29,6 @@ import {
 export interface APIAutocompleteSchoolResult23 {
     /**
      * List of the schools that match the query
-     * @type {Array<APISchoolAC23>}
-     * @memberof APIAutocompleteSchoolResult23
      */
     schoolMatches?: Array<APISchoolAC23>;
 }

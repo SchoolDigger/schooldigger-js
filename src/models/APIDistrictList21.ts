@@ -29,20 +29,14 @@ import {
 export interface APIDistrictList21 {
     /**
      * 
-     * @type {Array<APIDistrictSummary21>}
-     * @memberof APIDistrictList21
      */
     districtList?: Array<APIDistrictSummary21>;
     /**
      * The total count of districts that match your query
-     * @type {number}
-     * @memberof APIDistrictList21
      */
     numberOfDistricts?: number;
     /**
      * The total count of pages in your query list based on given per_page value
-     * @type {number}
-     * @memberof APIDistrictList21
      */
     numberOfPages?: number;
 }

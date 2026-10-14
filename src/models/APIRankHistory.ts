@@ -21,44 +21,30 @@ import { mapValues } from '../runtime';
 export interface APIRankHistory {
     /**
      * School year (2017 - 2016-17)
-     * @type {number}
-     * @memberof APIRankHistory
      */
     year?: number;
     /**
      * Statewide rank of this School
-     * @type {number}
-     * @memberof APIRankHistory
      */
     rank?: number;
     /**
      * Count of schools ranked at this state/level
-     * @type {number}
-     * @memberof APIRankHistory
      */
     rankOf?: number;
     /**
      * The number of stars SchoolDigger awarded in the ranking of the school (0-5, 5 is best)
-     * @type {number}
-     * @memberof APIRankHistory
      */
     rankStars?: number;
     /**
      * The level for which this school is ranked (Elementary, Middle, High)
-     * @type {string}
-     * @memberof APIRankHistory
      */
     rankLevel?: string;
     /**
      * Percentile of this school's rank (e.g. this school performed better than (x)% of this state's elementary schools)
-     * @type {number}
-     * @memberof APIRankHistory
      */
     rankStatewidePercentage?: number;
     /**
      * The Average Standard score calculated by SchoolDigger (see: https://www.schooldigger.com/aboutrankingmethodology.aspx)
-     * @type {number}
-     * @memberof APIRankHistory
      */
     averageStandardScore?: number;
 }

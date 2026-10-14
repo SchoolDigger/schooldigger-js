@@ -29,62 +29,42 @@ import {
 export interface APILocation {
     /**
      * 
-     * @type {APILatLong}
-     * @memberof APILocation
      */
     latLong?: APILatLong;
     /**
      * Street address of the school or district (e.g. '18500 37th Avenue N.E.')
-     * @type {string}
-     * @memberof APILocation
      */
     street?: string;
     /**
      * City where the school or district is located
-     * @type {string}
-     * @memberof APILocation
      */
     city?: string;
     /**
      * Two-letter state abbreviation (e.g. 'WA')
-     * @type {string}
-     * @memberof APILocation
      */
     state?: string;
     /**
      * Full state name (WA = Washington)
-     * @type {string}
-     * @memberof APILocation
      */
     stateFull?: string;
     /**
      * 5-digit ZIP code
-     * @type {string}
-     * @memberof APILocation
      */
     zip?: string;
     /**
      * ZIP+4 suffix (4 digits, may be empty)
-     * @type {string}
-     * @memberof APILocation
      */
     zip4?: string;
     /**
      * SchoolDigger URL for schools in this city
-     * @type {string}
-     * @memberof APILocation
      */
     cityURL?: string;
     /**
      * SchoolDigger URL for schools in this zip code
-     * @type {string}
-     * @memberof APILocation
      */
     zipURL?: string;
     /**
      * HTML formatted address
-     * @type {string}
-     * @memberof APILocation
      */
     html?: string;
 }

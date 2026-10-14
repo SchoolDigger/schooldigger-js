@@ -12,31 +12,57 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  APIDistrictListRank21,
-  APISchoolListRank31,
-} from '../models/index';
 import {
+    type APIDistrictListRank21,
     APIDistrictListRank21FromJSON,
     APIDistrictListRank21ToJSON,
+} from '../models/APIDistrictListRank21';
+import {
+    type APISchoolListRank31,
     APISchoolListRank31FromJSON,
     APISchoolListRank31ToJSON,
-} from '../models/index';
+} from '../models/APISchoolListRank31';
 
 export interface GetDistrictRankingsRequest {
+    /**
+     * Two character state (e.g. 'CA')
+     */
     st: string;
+    /**
+     * The ranking year (leave blank for most recent year)
+     */
     year?: number;
+    /**
+     * Page number to retrieve (optional, default: 1)
+     */
     page?: number;
+    /**
+     * Number of districts to retrieve on a page (50 max) (optional, default: 10)
+     */
     perPage?: number;
 }
 
 export interface GetSchoolRankingsRequest {
+    /**
+     * Two character state (e.g. 'CA')
+     */
     st: string;
+    /**
+     * The ranking year (leave blank for most recent year)
+     */
     year?: number;
+    /**
+     * Level of ranking: 'Elementary', 'Middle', or 'High'
+     */
     level?: string;
+    /**
+     * Page number to retrieve (optional, default: 1)
+     */
     page?: number;
+    /**
+     * Number of schools to retrieve on a page (50 max) (optional, default: 10)
+     */
     perPage?: number;
 }
 
@@ -82,7 +108,7 @@ export class RankingsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/v3.1/rankings/districts/{st}`;
-        urlPath = urlPath.replace(`{${"st"}}`, encodeURIComponent(String(requestParameters['st'])));
+        urlPath = urlPath.replace('{st}', encodeURIComponent(String(requestParameters['st'])));
 
         return {
             path: urlPath,
@@ -151,7 +177,7 @@ export class RankingsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/v3.1/rankings/schools/{st}`;
-        urlPath = urlPath.replace(`{${"st"}}`, encodeURIComponent(String(requestParameters['st'])));
+        urlPath = urlPath.replace('{st}', encodeURIComponent(String(requestParameters['st'])));
 
         return {
             path: urlPath,

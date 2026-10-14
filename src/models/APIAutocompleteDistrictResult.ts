@@ -29,8 +29,6 @@ import {
 export interface APIAutocompleteDistrictResult {
     /**
      * List of the districts that match the query
-     * @type {Array<APIDistrictAC>}
-     * @memberof APIAutocompleteDistrictResult
      */
     districtMatches?: Array<APIDistrictAC>;
 }

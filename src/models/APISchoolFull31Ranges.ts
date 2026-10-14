@@ -107,212 +107,142 @@ import {
 export interface APISchoolFull31Ranges {
     /**
      * 
-     * @type {APILowIncome}
-     * @memberof APISchoolFull31Ranges
      */
     lowIncome?: APILowIncome;
     /**
      * Yearly enrollment, demographics, and staffing for this school, most recent year first. API 3.1 adds freeReducedLunch and directCertification to each year.
-     * @type {Array<APIYearlyDemographics31>}
-     * @memberof APISchoolFull31Ranges
      */
     schoolYearlyDetails?: Array<APIYearlyDemographics31>;
     /**
      * Standardized test score results with school, district, and state comparisons. Each entry represents one test/subject/grade/year combination. Percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent). Includes optional tier breakdowns (Enterprise level). Tests are state-specific (e.g. SBA, WCAS in WA; CAASPP in CA). Requires Pro or Enterprise API subscription.
-     * @type {Array<APITestScoreWrapper30>}
-     * @memberof APISchoolFull31Ranges
      */
     testScores?: Array<APITestScoreWrapper30>;
     /**
      * SchoolDigger School ID Number (12 digits)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     schoolid?: string;
     /**
      * School name
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     schoolName?: string;
     /**
      * School phone number
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     phone?: string;
     /**
      * URL of the school's own public website (may be null if not available). This is NOT the SchoolDigger page — see urlSchoolDigger for that.
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     url?: string;
     /**
      * SchoolDigger URL for this school
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     urlSchoolDigger?: string;
     /**
      * SchoolDigger URL for comparing this school to nearby schools
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     urlCompareSchoolDigger?: string;
     /**
      * 
-     * @type {APILocation}
-     * @memberof APISchoolFull31Ranges
      */
     address?: APILocation;
     /**
      * NCES urban-centric locale classification (e.g. 'City: Large', 'Suburb: Midsize', 'Rural: Fringe'). Categories: City (Large/Midsize/Small), Suburb (Large/Midsize/Small), Town (Fringe/Distant/Remote), Rural (Fringe/Distant/Remote). See https://nces.ed.gov/ccd/rural_locales.asp
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     locale?: string;
     /**
      * The low grade served by this school (PK = Prekindergarten, K = Kindergarten)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     lowGrade?: string;
     /**
      * The high grade served by this school
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     highGrade?: string;
     /**
      * The level of school (Elementary, Middle, High, Private, Alternative)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     schoolLevel?: string;
     /**
      * Indicates if school is a charter school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     isCharterSchool?: string;
     /**
      * Indicates if school is a magnet school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     isMagnetSchool?: string;
     /**
      * Indicates if school is a virtual school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     isVirtualSchool?: string;
     /**
      * Indicates if school is a Title I school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     isTitleISchool?: string;
     /**
      * Indicates if a school-wide Title I school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     isTitleISchoolwideSchool?: string;
     /**
      * Indicates if school is a private school (Yes/No)
-     * @type {boolean}
-     * @memberof APISchoolFull31Ranges
      */
     isPrivate?: boolean;
     /**
      * Days in the school year (private schools only)
-     * @type {number}
-     * @memberof APISchoolFull31Ranges
      */
     privateDays?: number;
     /**
      * Hours in the school day (private schools only)
-     * @type {number}
-     * @memberof APISchoolFull31Ranges
      */
     privateHours?: number;
     /**
      * Indicates if the school has a library (private schools only)
-     * @type {boolean}
-     * @memberof APISchoolFull31Ranges
      */
     privateHasLibrary?: boolean;
     /**
      * Coed/Boys/Girls (private schools only)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     privateCoed?: string;
     /**
      * Affiliation of the school (private schools only)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     privateOrientation?: string;
     /**
      * The NCES ID of the school (private schools only)
-     * @type {string}
-     * @memberof APISchoolFull31Ranges
      */
     ncesPrivateSchoolID?: string;
     /**
      * 
-     * @type {APIDistrictSum}
-     * @memberof APISchoolFull31Ranges
      */
     district?: APIDistrictSum;
     /**
      * 
-     * @type {APICounty}
-     * @memberof APISchoolFull31Ranges
      */
     county?: APICounty;
     /**
      * User-submitted reviews from SchoolDigger.com visitors. Each review includes a star rating (1-5), comment text (HTML encoded), date, and reviewer type (parent, student, teacher, principal, citizen). Reviews are unmoderated user content.
-     * @type {Array<APISchoolReview>}
-     * @memberof APISchoolFull31Ranges
      */
     reviews?: Array<APISchoolReview>;
     /**
      * Yearly per-student spending data. Array is sorted most recent year first. spendingPerStudent is available at Pro level; detailed federal/state/local and personnel/non-personnel breakdowns require Enterprise level.
-     * @type {Array<APISchoolFinance>}
-     * @memberof APISchoolFull31Ranges
      */
     finance?: Array<APISchoolFinance>;
     /**
      * 4-year adjusted cohort graduation rates at school, district, and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.
-     * @type {Array<APIGraduationRate>}
-     * @memberof APISchoolFull31Ranges
      */
     graduationRates?: Array<APIGraduationRate>;
     /**
      * Annual dropout rates at school, district, and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.
-     * @type {Array<APIDropoutRate>}
-     * @memberof APISchoolFull31Ranges
      */
     dropoutRates?: Array<APIDropoutRate>;
     /**
      * Chronic absenteeism rates (students missing 15+ days) at school, district, and state levels (Pro and Enterprise API level only). Array is sorted most recent year first. Data availability varies by state.
-     * @type {Array<APIChronicAbsenteeismRate>}
-     * @memberof APISchoolFull31Ranges
      */
     chronicAbsenteeismRates?: Array<APIChronicAbsenteeismRate>;
     /**
      * SchoolDigger yearly rank history for this school, sorted most recent year first. Schools are ranked within their state and level (Elementary, Middle, or High). Includes all available years — the full record returns more years than the summary in search results.
-     * @type {Array<APIRankHistory>}
-     * @memberof APISchoolFull31Ranges
      */
     rankHistory?: Array<APIRankHistory>;
     /**
      * Returns the movement of rank for this school between current and previous year
-     * @type {number}
-     * @memberof APISchoolFull31Ranges
      */
     rankMovement?: number;
 }

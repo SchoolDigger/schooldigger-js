@@ -94,134 +94,90 @@ import {
 export interface APIDistrictFull30 {
     /**
      * Standardized test score results with district and state comparisons. Each entry represents one test/subject/grade/year combination. District-level records do not include schoolTestScore. Percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent). Requires Pro or Enterprise API subscription.
-     * @type {Array<APITestScoreWrapper30>}
-     * @memberof APIDistrictFull30
      */
     testScores?: Array<APITestScoreWrapper30>;
     /**
      * SchoolDigger District ID Number (7 digits)
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     districtID?: string;
     /**
      * District name
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     districtName?: string;
     /**
      * District phone number
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     phone?: string;
     /**
      * SchoolDigger URL for this district
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     url?: string;
     /**
      * 
-     * @type {APILocation}
-     * @memberof APIDistrictFull30
      */
     address?: APILocation;
     /**
      * The low grade served by this district (PK = Prekindergarten, K = Kindergarten)
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     lowGrade?: string;
     /**
      * The high grade served by this district
-     * @type {string}
-     * @memberof APIDistrictFull30
      */
     highGrade?: string;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictFull30
      */
     numberTotalSchools?: number;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictFull30
      */
     numberPrimarySchools?: number;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictFull30
      */
     numberMiddleSchools?: number;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictFull30
      */
     numberHighSchools?: number;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictFull30
      */
     numberAlternativeSchools?: number;
     /**
      * 
-     * @type {APIBoundary12}
-     * @memberof APIDistrictFull30
      */
     boundary?: APIBoundary12;
     /**
      * Yearly per-student spending data. Array is sorted most recent year first. spendingPerStudent is available at Pro level; detailed federal/state/local and personnel/non-personnel breakdowns require Enterprise level.
-     * @type {Array<APISchoolFinance>}
-     * @memberof APIDistrictFull30
      */
     finance?: Array<APISchoolFinance>;
     /**
      * 4-year adjusted cohort graduation rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.
-     * @type {Array<APIGraduationRate>}
-     * @memberof APIDistrictFull30
      */
     graduationRates?: Array<APIGraduationRate>;
     /**
      * Annual dropout rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.
-     * @type {Array<APIDropoutRate>}
-     * @memberof APIDistrictFull30
      */
     dropoutRates?: Array<APIDropoutRate>;
     /**
      * Chronic absenteeism rates (students missing 15+ days) at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first. Data availability varies by state.
-     * @type {Array<APIChronicAbsenteeismRate>}
-     * @memberof APIDistrictFull30
      */
     chronicAbsenteeismRates?: Array<APIChronicAbsenteeismRate>;
     /**
      * Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude
-     * @type {boolean}
-     * @memberof APIDistrictFull30
      */
     isWithinBoundary?: boolean;
     /**
      * 
-     * @type {APICounty}
-     * @memberof APIDistrictFull30
      */
     county?: APICounty;
     /**
      * SchoolDigger yearly rank history for this district, sorted most recent year first. Districts are ranked statewide regardless of level.
-     * @type {Array<APILEARankHistory>}
-     * @memberof APIDistrictFull30
      */
     rankHistory?: Array<APILEARankHistory>;
     /**
      * Yearly enrollment and staffing details for this district. Array is sorted most recent year first. Includes detailed FTE staffing breakdowns by role (teachers by level, administrators, counselors, librarians, support staff).
-     * @type {Array<APILEAYearlyDetail>}
-     * @memberof APIDistrictFull30
      */
     districtYearlyDetails?: Array<APILEAYearlyDetail>;
 }

@@ -21,14 +21,10 @@ import { mapValues } from '../runtime';
 export interface APIDirectCertification {
     /**
      * Number of students directly certified for free meals
-     * @type {number}
-     * @memberof APIDirectCertification
      */
     count?: number;
     /**
      * Percent of enrolled students excluding pre-kindergarten (0-100, two decimals)
-     * @type {number}
-     * @memberof APIDirectCertification
      */
     percent?: number;
 }

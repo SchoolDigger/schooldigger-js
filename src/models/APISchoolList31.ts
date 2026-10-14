@@ -30,20 +30,14 @@ import {
 export interface APISchoolList31 {
     /**
      * The schools that match your query, each with lowIncome
-     * @type {Array<APISchoolSummary31>}
-     * @memberof APISchoolList31
      */
     schoolList?: Array<APISchoolSummary31>;
     /**
      * The total count of schools that match your query
-     * @type {number}
-     * @memberof APISchoolList31
      */
     numberOfSchools?: number;
     /**
      * The total count of pages in your query list based on given per_page value
-     * @type {number}
-     * @memberof APISchoolList31
      */
     numberOfPages?: number;
 }

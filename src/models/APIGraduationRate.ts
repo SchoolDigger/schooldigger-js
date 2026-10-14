@@ -21,26 +21,18 @@ import { mapValues } from '../runtime';
 export interface APIGraduationRate {
     /**
      * School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)
-     * @type {number}
-     * @memberof APIGraduationRate
      */
     year?: number;
     /**
      * 4-Year Graduation Rate at the School Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIGraduationRate
      */
     schoolGraduationRate?: number;
     /**
      * 4-Year Graduation Rate at the District Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIGraduationRate
      */
     districtGraduationRate?: number;
     /**
      * 4-Year Graduation Rate at the State Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIGraduationRate
      */
     stateGraduationRate?: number;
 }

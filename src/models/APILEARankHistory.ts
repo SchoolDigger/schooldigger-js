@@ -21,38 +21,26 @@ import { mapValues } from '../runtime';
 export interface APILEARankHistory {
     /**
      * School year (2017 - 2016-17)
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     year?: number;
     /**
      * Statewide rank of this district
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     rank?: number;
     /**
      * Count of district ranked in this state
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     rankOf?: number;
     /**
      * The number of stars SchoolDigger awarded in the ranking of the district (0-5, 5 is best)
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     rankStars?: number;
     /**
      * Percentile of this district's rank (e.g. this district performed better than (x)% of this state's districts)
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     rankStatewidePercentage?: number;
     /**
      * The rank score calculated by SchoolDigger (see https://www.schooldigger.com/aboutranking.aspx)
-     * @type {number}
-     * @memberof APILEARankHistory
      */
     rankScore?: number;
 }

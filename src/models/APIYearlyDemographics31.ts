@@ -37,140 +37,94 @@ import {
 export interface APIYearlyDemographics31 {
     /**
      * 
-     * @type {APIFreeReducedLunch}
-     * @memberof APIYearlyDemographics31
      */
     freeReducedLunch?: APIFreeReducedLunch;
     /**
      * 
-     * @type {APIDirectCertification}
-     * @memberof APIYearlyDemographics31
      */
     directCertification?: APIDirectCertification;
     /**
      * School year (2018 = 2017-18)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     year?: number;
     /**
      * Count of students attending the school
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberOfStudents?: number;
     /**
      * Percent of students receiving a free or discounted lunch in the National School Lunch Program
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentFreeDiscLunch?: number;
     /**
      * Percentage of students who are Black or African American (NCES definition: a person having origins in any of the black racial groups of Africa)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofAfricanAmericanStudents?: number;
     /**
      * Percentage of students who are Asian (NCES definition: a person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofAsianStudents?: number;
     /**
      * Percentage of students who are Hispanic or Latino (NCES definition: a person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofHispanicStudents?: number;
     /**
      * Percentage of students who are American Indian or Alaska Native (NCES definition: a person having origins in any of the original peoples of North and South America who maintains tribal affiliation or community attachment)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofIndianStudents?: number;
     /**
      * Percentage of students who are Native Hawaiian or Other Pacific Islander (NCES definition: a person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofPacificIslanderStudents?: number;
     /**
      * Percentage of students who are White (NCES definition: a person having origins in any of the original peoples of Europe, the Middle East, or North Africa)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofWhiteStudents?: number;
     /**
      * Percentage of students reporting two or more races (not Hispanic/Latino)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofTwoOrMoreRaceStudents?: number;
     /**
      * Percentage of students whose race/ethnicity was not specified or reported
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     percentofUnspecifiedRaceStudents?: number;
     /**
      * Number of full-time equivalent teachers employed at the school
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     teachersFulltime?: number;
     /**
      * Number of students / number of full-time equivalent teachers
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     pupilTeacherRatio?: number;
     /**
      * NCES definition: A person having origins in any of the black racial groups of Africa.  (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofAfricanAmericanStudents?: number;
     /**
      * NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.  (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofAsianStudents?: number;
     /**
      * NCES definition: A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofHispanicStudents?: number;
     /**
      * Count of American Indian or Alaska Native students (NCES definition: a person having origins in any of the original peoples of North and South America who maintains tribal affiliation or community attachment)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofIndianStudents?: number;
     /**
      * NCES definition: A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands. (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofPacificIslanderStudents?: number;
     /**
      * NCES definition: A person having origins in any of the original peoples of Europe, the Middle East, or North Africa. (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofWhiteStudents?: number;
     /**
      * NCES definition: Includes any combination of two or more races and not Hispanic/Latino ethnicity. (https://nces.ed.gov/statprog/2002/std1_5.asp)
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofTwoOrMoreRaceStudents?: number;
     /**
      * Count of students whose race/ethnicity was not specified or reported
-     * @type {number}
-     * @memberof APIYearlyDemographics31
      */
     numberofUnspecifiedRaceStudents?: number;
 }

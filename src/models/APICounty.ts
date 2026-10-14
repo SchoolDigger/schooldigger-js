@@ -21,14 +21,10 @@ import { mapValues } from '../runtime';
 export interface APICounty {
     /**
      * County in which the school or district is located
-     * @type {string}
-     * @memberof APICounty
      */
     countyName?: string;
     /**
      * SchoolDigger URL for all schools in this county
-     * @type {string}
-     * @memberof APICounty
      */
     countyURL?: string;
 }

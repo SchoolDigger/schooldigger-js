@@ -29,44 +29,30 @@ import {
 export interface APIDistrictListRank21 {
     /**
      * Year this ranking list represents (2018 = 2017-18)
-     * @type {number}
-     * @memberof APIDistrictListRank21
      */
     rankYear?: number;
     /**
      * Year rankings returned for comparison (2018 = 2017-18)
-     * @type {number}
-     * @memberof APIDistrictListRank21
      */
     rankYearCompare?: number;
     /**
      * The years for which SchoolDigger district rankings are available for this state
-     * @type {Array<number>}
-     * @memberof APIDistrictListRank21
      */
     rankYearsAvailable?: Array<number>;
     /**
      * The total count of districts in the entire rank list
-     * @type {number}
-     * @memberof APIDistrictListRank21
      */
     numberOfDistricts?: number;
     /**
      * The total count of pages in your query list based on given per_page value
-     * @type {number}
-     * @memberof APIDistrictListRank21
      */
     numberOfPages?: number;
     /**
      * 
-     * @type {Array<APIDistrictSummary21>}
-     * @memberof APIDistrictListRank21
      */
     districtList?: Array<APIDistrictSummary21>;
     /**
      * 
-     * @type {number}
-     * @memberof APIDistrictListRank21
      */
     rankCompareYear?: number;
 }

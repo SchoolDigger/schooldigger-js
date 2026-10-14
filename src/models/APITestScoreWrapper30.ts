@@ -32,74 +32,50 @@ import {
 export interface APITestScoreWrapper30 {
     /**
      * The name of the state-administered test
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     test?: string;
     /**
      * Test subject
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     subject?: string;
     /**
      * Year test was administered (2018 = 2017-18)
-     * @type {number}
-     * @memberof APITestScoreWrapper30
      */
     year?: number;
     /**
      * Grade level for which this test score applies (e.g. '3', '5', '8', '10', 'HS')
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     grade?: string;
     /**
      * 
-     * @type {APITestScore30}
-     * @memberof APITestScoreWrapper30
      */
     schoolTestScore?: APITestScore30;
     /**
      * 
-     * @type {APITestScore30}
-     * @memberof APITestScoreWrapper30
      */
     districtTestScore?: APITestScore30;
     /**
      * 
-     * @type {APITestScore30}
-     * @memberof APITestScoreWrapper30
      */
     stateTestScore?: APITestScore30;
     /**
      * Label for the lowest performance tier on this test (e.g. 'Below Basic', 'Level 1'). Tier labels are state-specific. Enterprise API level only.
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     tier1?: string;
     /**
      * Label for the second performance tier (e.g. 'Basic', 'Level 2'). Enterprise API level only.
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     tier2?: string;
     /**
      * Label for the third performance tier (e.g. 'Proficient', 'Level 3'). Enterprise API level only.
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     tier3?: string;
     /**
      * Label for the fourth performance tier (e.g. 'Advanced', 'Level 4'). Enterprise API level only.
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     tier4?: string;
     /**
      * Label for the fifth performance tier, if applicable (e.g. 'No Score'). Not all states use 5 tiers. Enterprise API level only.
-     * @type {string}
-     * @memberof APITestScoreWrapper30
      */
     tier5?: string;
 }

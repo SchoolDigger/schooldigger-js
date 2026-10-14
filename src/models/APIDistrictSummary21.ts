@@ -50,116 +50,78 @@ import {
 export interface APIDistrictSummary21 {
     /**
      * SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the entire district record
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     districtID?: string;
     /**
      * District name
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     districtName?: string;
     /**
      * District phone number
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     phone?: string;
     /**
      * SchoolDigger URL for this district
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     url?: string;
     /**
      * 
-     * @type {APILocation}
-     * @memberof APIDistrictSummary21
      */
     address?: APILocation;
     /**
      * Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress (Enterprise API level)
-     * @type {boolean}
-     * @memberof APIDistrictSummary21
      */
     locationIsWithinBoundary?: boolean;
     /**
      * Indicates that an attendance boundary is available for this district. (To retrieve, look up district with /districts/{id})
-     * @type {boolean}
-     * @memberof APIDistrictSummary21
      */
     hasBoundary?: boolean;
     /**
      * Distance in miles from the nearLatitude/nearLongitude coordinates (only populated when proximity search parameters are provided)
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     distance?: number;
     /**
      * Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude
-     * @type {boolean}
-     * @memberof APIDistrictSummary21
      */
     isWithinBoundary?: boolean;
     /**
      * 
-     * @type {APICounty}
-     * @memberof APIDistrictSummary21
      */
     county?: APICounty;
     /**
      * The low grade served by this district (PK = Prekindergarten, K = Kindergarten)
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     lowGrade?: string;
     /**
      * The high grade served by this district
-     * @type {string}
-     * @memberof APIDistrictSummary21
      */
     highGrade?: string;
     /**
      * Count of schools in the district
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     numberTotalSchools?: number;
     /**
      * Count of schools designated as primary schools
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     numberPrimarySchools?: number;
     /**
      * Count of schools designated as middle schools
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     numberMiddleSchools?: number;
     /**
      * Count of schools designated as high schools
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     numberHighSchools?: number;
     /**
      * Count of schools designated as other/alternative schools
-     * @type {number}
-     * @memberof APIDistrictSummary21
      */
     numberAlternativeSchools?: number;
     /**
      * SchoolDigger yearly rank history of the district
-     * @type {Array<APILEARankHistory>}
-     * @memberof APIDistrictSummary21
      */
     rankHistory?: Array<APILEARankHistory>;
     /**
      * District yearly metrics
-     * @type {Array<APILEAYearlyDetail>}
-     * @memberof APIDistrictSummary21
      */
     districtYearlyDetails?: Array<APILEAYearlyDetail>;
 }

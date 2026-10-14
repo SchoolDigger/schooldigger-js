@@ -65,170 +65,114 @@ import {
 export interface APISchoolSummaryRank31 {
     /**
      * 
-     * @type {APILowIncome}
-     * @memberof APISchoolSummaryRank31
      */
     lowIncome?: APILowIncome;
     /**
      * SchoolDigger School ID Number (12 digits)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     schoolid?: string;
     /**
      * School name
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     schoolName?: string;
     /**
      * School phone number
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     phone?: string;
     /**
      * SchoolDigger URL for this school
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     url?: string;
     /**
      * SchoolDigger URL for comparing this school to nearby schools
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     urlCompare?: string;
     /**
      * 
-     * @type {APILocation}
-     * @memberof APISchoolSummaryRank31
      */
     address?: APILocation;
     /**
      * Distance from nearLatitude/nearLongitude, boundaryLatitude/boundaryLongitude, or boundaryAddress (if supplied)
-     * @type {number}
-     * @memberof APISchoolSummaryRank31
      */
     distance?: number;
     /**
      * NCES urban-centric locale classification (e.g. 'City: Large', 'Suburb: Midsize', 'Rural: Fringe'). Categories: City (Large/Midsize/Small), Suburb (Large/Midsize/Small), Town (Fringe/Distant/Remote), Rural (Fringe/Distant/Remote). See https://nces.ed.gov/ccd/rural_locales.asp
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     locale?: string;
     /**
      * The low grade served by this school (PK = Prekindergarten, K = Kindergarten)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     lowGrade?: string;
     /**
      * The high grade served by this school
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     highGrade?: string;
     /**
      * The level of school (Elementary, Middle, High, Private, Alternative)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     schoolLevel?: string;
     /**
      * Indicates if school is a charter school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     isCharterSchool?: string;
     /**
      * Indicates if school is a magnet school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     isMagnetSchool?: string;
     /**
      * Indicates if school is a virtual school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     isVirtualSchool?: string;
     /**
      * Indicates if school is a Title I school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     isTitleISchool?: string;
     /**
      * Indicates if a school-wide Title I school (Yes/No/n-a)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     isTitleISchoolwideSchool?: string;
     /**
      * 
-     * @type {APIDistrictSum}
-     * @memberof APISchoolSummaryRank31
      */
     district?: APIDistrictSum;
     /**
      * 
-     * @type {APICounty}
-     * @memberof APISchoolSummaryRank31
      */
     county?: APICounty;
     /**
      * SchoolDigger yearly rank history of the school. To retrieve all years, call /schools/{id}.
-     * @type {Array<APIRankHistory>}
-     * @memberof APISchoolSummaryRank31
      */
     rankHistory?: Array<APIRankHistory>;
     /**
      * Returns the movement of rank for this school between current and previous year
-     * @type {number}
-     * @memberof APISchoolSummaryRank31
      */
     rankMovement?: number;
     /**
      * School Yearly metrics. To retrieve all years, call /schools/{id}.
-     * @type {Array<APIYearlyDemographics>}
-     * @memberof APISchoolSummaryRank31
      */
     schoolYearlyDetails?: Array<APIYearlyDemographics>;
     /**
      * Indicates if school is a private school (Yes/No)
-     * @type {boolean}
-     * @memberof APISchoolSummaryRank31
      */
     isPrivate?: boolean;
     /**
      * Days in the school year (private schools only)
-     * @type {number}
-     * @memberof APISchoolSummaryRank31
      */
     privateDays?: number;
     /**
      * Hours in the school day (private schools only)
-     * @type {number}
-     * @memberof APISchoolSummaryRank31
      */
     privateHours?: number;
     /**
      * Indicates if the school has a library (private schools only)
-     * @type {boolean}
-     * @memberof APISchoolSummaryRank31
      */
     privateHasLibrary?: boolean;
     /**
      * Coed/Boys/Girls (private schools only)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     privateCoed?: string;
     /**
      * Affiliation of the school (private schools only)
-     * @type {string}
-     * @memberof APISchoolSummaryRank31
      */
     privateOrientation?: string;
 }

@@ -21,14 +21,10 @@ import { mapValues } from '../runtime';
 export interface APILatLong {
     /**
      * Latitude coordinate of the school or district address (WGS84 decimal degrees)
-     * @type {number}
-     * @memberof APILatLong
      */
     latitude?: number;
     /**
      * Longitude coordinate of the school or district address (WGS84 decimal degrees, negative for Western Hemisphere)
-     * @type {number}
-     * @memberof APILatLong
      */
     longitude?: number;
 }

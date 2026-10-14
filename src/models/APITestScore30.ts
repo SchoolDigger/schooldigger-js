@@ -68,92 +68,62 @@ import {
 export interface APITestScore30 {
     /**
      * Count of students eligible to take test
-     * @type {number}
-     * @memberof APITestScore30
      */
     studentsEligible?: number;
     /**
      * Count of students tested
-     * @type {number}
-     * @memberof APITestScore30
      */
     studentsTested?: number;
     /**
      * Mean scale score
-     * @type {number}
-     * @memberof APITestScore30
      */
     meanScaledScore?: number;
     /**
      * 
-     * @type {APITestScore30PercentMetStandard}
-     * @memberof APITestScore30
      */
     percentMetStandard?: APITestScore30PercentMetStandard;
     /**
      * Count of students meeting state standard
-     * @type {number}
-     * @memberof APITestScore30
      */
     numberMetStandard?: number;
     /**
      * Count of students performing at tier 1 (Enterprise API level only)
-     * @type {number}
-     * @memberof APITestScore30
      */
     numTier1?: number;
     /**
      * Count of students performing at tier 2 (Enterprise API level only)
-     * @type {number}
-     * @memberof APITestScore30
      */
     numTier2?: number;
     /**
      * Count of students performing at tier 3 (Enterprise API level only)
-     * @type {number}
-     * @memberof APITestScore30
      */
     numTier3?: number;
     /**
      * Count of students performing at tier 4 (Enterprise API level only)
-     * @type {number}
-     * @memberof APITestScore30
      */
     numTier4?: number;
     /**
      * Count of students performing at tier 5 (Enterprise API level only)
-     * @type {number}
-     * @memberof APITestScore30
      */
     numTier5?: number;
     /**
      * 
-     * @type {APITestScore30PercentTier1}
-     * @memberof APITestScore30
      */
     percentTier1?: APITestScore30PercentTier1;
     /**
      * 
-     * @type {APITestScore30PercentTier2}
-     * @memberof APITestScore30
      */
     percentTier2?: APITestScore30PercentTier2;
     /**
      * 
-     * @type {APITestScore30PercentTier3}
-     * @memberof APITestScore30
      */
     percentTier3?: APITestScore30PercentTier3;
     /**
      * 
-     * @type {APITestScore30PercentTier4}
-     * @memberof APITestScore30
      */
     percentTier4?: APITestScore30PercentTier4;
     /**
      * 
-     * @type {APITestScore30PercentTier5}
-     * @memberof APITestScore30
      */
     percentTier5?: APITestScore30PercentTier5;
 }

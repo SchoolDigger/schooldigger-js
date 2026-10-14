@@ -21,14 +21,10 @@ import { mapValues } from '../runtime';
 export interface APIPolyline {
     /**
      * Google Maps encoded polyline string for rendering the boundary on a map. Compatible with google.maps.geometry.encoding.decodePath() and similar libraries. IMPORTANT: Backslashes are JSON-escaped (appear as \\). Unescape to single backslashes before decoding.
-     * @type {string}
-     * @memberof APIPolyline
      */
     polylineOverlayEncodedPoints?: string;
     /**
      * Number of encoded points in polyline
-     * @type {number}
-     * @memberof APIPolyline
      */
     numberEncodedPoints?: number;
 }

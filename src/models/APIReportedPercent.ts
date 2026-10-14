@@ -28,26 +28,18 @@ import { mapValues } from '../runtime';
 export interface APIReportedPercent {
     /**
      * Why there is no exact number: 'range', 'suppressed', 'legacyImputed' or 'derived'
-     * @type {string}
-     * @memberof APIReportedPercent
      */
     status?: string;
     /**
      * The percent value, when one exists (status 'derived' with an exact result, or the 'legacyImputed' stand-in). Absent otherwise.
-     * @type {number}
-     * @memberof APIReportedPercent
      */
     value?: number;
     /**
      * Lower bound of the range in percent (0 means 'less than high'). Absent for 'suppressed'.
-     * @type {number}
-     * @memberof APIReportedPercent
      */
     low?: number;
     /**
      * Upper bound of the range in percent (100 means 'at least low'). Absent for 'suppressed'.
-     * @type {number}
-     * @memberof APIReportedPercent
      */
     high?: number;
 }

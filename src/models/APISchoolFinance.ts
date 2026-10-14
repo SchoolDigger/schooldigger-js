@@ -21,50 +21,34 @@ import { mapValues } from '../runtime';
 export interface APISchoolFinance {
     /**
      * Fiscal school year using spring-year convention (e.g. 2024 = the 2023-2024 fiscal year).
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     year?: number;
     /**
      * Total spending per student from all funds (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingPerStudent?: number;
     /**
      * Spending per student for Personnel at the Federal Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingFederalPersonnel?: number;
     /**
      * Spending per student for Non-personnel at the Federal Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingFederalNonPersonnel?: number;
     /**
      * Spending per student for Personnel at the State and Local Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingStateLocalPersonnel?: number;
     /**
      * Spending per student for Non-personnel at the State and Local Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingStateLocalNonPersonnel?: number;
     /**
      * Spending per student at the Federal Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingPerStudentFederal?: number;
     /**
      * Spending per student at the State and Local Level (Enterprise level only)
-     * @type {number}
-     * @memberof APISchoolFinance
      */
     spendingPerStudentStateLocal?: number;
 }

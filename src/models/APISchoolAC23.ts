@@ -21,86 +21,58 @@ import { mapValues } from '../runtime';
 export interface APISchoolAC23 {
     /**
      * SchoolDigger School ID Number (12 digits). Use /schools/{schoolID} to retrieve the full school record
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     schoolid?: string;
     /**
      * School name
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     schoolName?: string;
     /**
      * School location city
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     city?: string;
     /**
      * School location state
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     state?: string;
     /**
      * School location zip code (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     zip?: string;
     /**
      * The level of school (Elementary, Middle, High, Private, Alternative)
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     schoolLevel?: string;
     /**
      * The low grade served by this school (PK = Prekindergarten, K = Kindergarten)  (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     lowGrade?: string;
     /**
      * The high grade served by this school  (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     highGrade?: string;
     /**
      * School location latitude (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {number}
-     * @memberof APISchoolAC23
      */
     latitude?: number;
     /**
      * School location longitude (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {number}
-     * @memberof APISchoolAC23
      */
     longitude?: number;
     /**
      * Statewide rank of this School  (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {number}
-     * @memberof APISchoolAC23
      */
     rank?: number;
     /**
      * Count of schools ranked at this state/level (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {number}
-     * @memberof APISchoolAC23
      */
     rankOf?: number;
     /**
      * The number of stars SchoolDigger awarded in the ranking of the school (0-5, 5 is best) (Pro, Enterprise, and Autocomplete Pro levels only)
-     * @type {number}
-     * @memberof APISchoolAC23
      */
     rankStars?: number;
     /**
      * The NCES ID of the school (private schools only)
-     * @type {string}
-     * @memberof APISchoolAC23
      */
     ncesPrivateSchoolID?: string;
 }

@@ -21,26 +21,18 @@ import { mapValues } from '../runtime';
 export interface APIChronicAbsenteeismRate {
     /**
      * School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)
-     * @type {number}
-     * @memberof APIChronicAbsenteeismRate
      */
     year?: number;
     /**
      * ChronicAbsenteeism Rate at the School Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIChronicAbsenteeismRate
      */
     schoolChronicAbsenteeismRate?: number;
     /**
      * ChronicAbsenteeism Rate at the District Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIChronicAbsenteeismRate
      */
     districtChronicAbsenteeismRate?: number;
     /**
      * ChronicAbsenteeism Rate at the State Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIChronicAbsenteeismRate
      */
     stateChronicAbsenteeismRate?: number;
 }

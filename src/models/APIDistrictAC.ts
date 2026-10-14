@@ -21,80 +21,54 @@ import { mapValues } from '../runtime';
 export interface APIDistrictAC {
     /**
      * SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the full district record
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     districtid?: string;
     /**
      * District name
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     districtName?: string;
     /**
      * District location city
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     city?: string;
     /**
      * District location state
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     state?: string;
     /**
      * District location zip code
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     zip?: string;
     /**
      * The low grade served by this district (PK = Prekindergarten, K = Kindergarten)
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     lowGrade?: string;
     /**
      * The high grade served by this district
-     * @type {string}
-     * @memberof APIDistrictAC
      */
     highGrade?: string;
     /**
      * District location latitude
-     * @type {number}
-     * @memberof APIDistrictAC
      */
     latitude?: number;
     /**
      * District location longitude
-     * @type {number}
-     * @memberof APIDistrictAC
      */
     longitude?: number;
     /**
      * States whether there is an attendance boundary available for this District
-     * @type {boolean}
-     * @memberof APIDistrictAC
      */
     hasBoundary?: boolean;
     /**
      * Statewide rank of this district
-     * @type {number}
-     * @memberof APIDistrictAC
      */
     rank?: number;
     /**
      * Count of districts ranked at this state/level
-     * @type {number}
-     * @memberof APIDistrictAC
      */
     rankOf?: number;
     /**
      * The number of stars SchoolDigger awarded in the ranking of the district (0-5, 5 is best)
-     * @type {number}
-     * @memberof APIDistrictAC
      */
     rankStars?: number;
 }

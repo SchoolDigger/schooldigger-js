@@ -29,38 +29,26 @@ import {
 export interface APISchoolListRank31 {
     /**
      * The schools in the ranking list, each with lowIncome
-     * @type {Array<APISchoolSummaryRank31>}
-     * @memberof APISchoolListRank31
      */
     schoolList?: Array<APISchoolSummaryRank31>;
     /**
      * Year this ranking list represents (2018 = 2017-18)
-     * @type {number}
-     * @memberof APISchoolListRank31
      */
     rankYear?: number;
     /**
      * Year rankings returned for comparison (2018 = 2017-18)
-     * @type {number}
-     * @memberof APISchoolListRank31
      */
     rankYearCompare?: number;
     /**
      * The years for which SchoolDigger rankings are available for this state and level
-     * @type {Array<number>}
-     * @memberof APISchoolListRank31
      */
     rankYearsAvailable?: Array<number>;
     /**
      * The total count of schools in this ranking list
-     * @type {number}
-     * @memberof APISchoolListRank31
      */
     numberOfSchools?: number;
     /**
      * The total count of pages this ranking list based on given per_page value
-     * @type {number}
-     * @memberof APISchoolListRank31
      */
     numberOfPages?: number;
 }

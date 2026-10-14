@@ -12,41 +12,97 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  APIDistrictFull30,
-  APIDistrictList21,
-} from '../models/index';
 import {
+    type APIDistrictFull30,
     APIDistrictFull30FromJSON,
     APIDistrictFull30ToJSON,
+} from '../models/APIDistrictFull30';
+import {
+    type APIDistrictList21,
     APIDistrictList21FromJSON,
     APIDistrictList21ToJSON,
-} from '../models/index';
+} from '../models/APIDistrictList21';
 
 export interface GetDistrictRequest {
+    /**
+     * The 7 digit District ID (e.g. 0642150)
+     */
     id: string;
+    /**
+     * true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)
+     */
     includeRanges?: boolean;
 }
 
 export interface SearchDistrictsRequest {
+    /**
+     * Two character state (e.g. 'CA') - optional if you supply a location search (nearLatitude/nearLongitude, boundaryAddress, or box coordinates); required otherwise. Location searches without 'st' may return districts from multiple states.
+     */
     st?: string;
+    /**
+     * Search term - note: will match district name or city (optional)
+     */
     q?: string;
+    /**
+     * Search for districts in this city (optional)
+     */
     city?: string;
+    /**
+     * Search for districts in this 5-digit zip code (optional)
+     */
     zip?: string;
+    /**
+     * Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)
+     */
     nearLatitude?: number;
+    /**
+     * Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only. Enterprise API level will flag districts that include lat/long in its attendance boundary.)
+     */
     nearLongitude?: number;
+    /**
+     * Full U.S. address: flag returned districts that include this address in its attendance boundary. Example: '123 Main St. AnyTown CA 90001' (optional) (Enterprise API level only)
+     */
     boundaryAddress?: string;
+    /**
+     * Search for districts within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 50 miles) (optional) (Pro, Enterprise API levels only)
+     */
     distanceMiles?: number;
+    /**
+     * Return only the districts that include given location (nearLatitude/nearLongitude) or (boundaryAddress) in its attendance boundary (Enterprise API level only)
+     */
     isInBoundaryOnly?: boolean;
+    /**
+     * Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)
+     */
     boxLatitudeNW?: number;
+    /**
+     * Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)
+     */
     boxLongitudeNW?: number;
+    /**
+     * Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)
+     */
     boxLatitudeSE?: number;
+    /**
+     * Search for districts within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional)
+     */
     boxLongitudeSE?: number;
+    /**
+     * Page number to retrieve (optional, default: 1)
+     */
     page?: number;
+    /**
+     * Number of districts to retrieve on a page (50 max) (optional, default: 10)
+     */
     perPage?: number;
+    /**
+     * Sort list. Values are: districtname, distance, rank. For descending order, precede with '-' i.e. -districtname (optional, default: districtname)
+     */
     sortBy?: string;
+    /**
+     * If sortBy is 'rank', this boolean determines if districts with no rank are included in the result (optional, default: false)
+     */
     includeUnrankedDistrictsInRankSort?: boolean;
 }
 
@@ -84,7 +140,7 @@ export class DistrictsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/v3.1/districts/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

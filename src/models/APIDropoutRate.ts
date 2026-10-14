@@ -21,26 +21,18 @@ import { mapValues } from '../runtime';
 export interface APIDropoutRate {
     /**
      * School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)
-     * @type {number}
-     * @memberof APIDropoutRate
      */
     year?: number;
     /**
      * Dropout Rate at the School Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIDropoutRate
      */
     schoolDropoutRate?: number;
     /**
      * Dropout Rate at the District Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIDropoutRate
      */
     districtDropoutRate?: number;
     /**
      * Dropout Rate at the State Level (Pro or Enterprise level only)
-     * @type {number}
-     * @memberof APIDropoutRate
      */
     stateDropoutRate?: number;
 }

@@ -12,39 +12,89 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  APIAutocompleteDistrictResult,
-  APIAutocompleteSchoolResult23,
-} from '../models/index';
 import {
+    type APIAutocompleteDistrictResult,
     APIAutocompleteDistrictResultFromJSON,
     APIAutocompleteDistrictResultToJSON,
+} from '../models/APIAutocompleteDistrictResult';
+import {
+    type APIAutocompleteSchoolResult23,
     APIAutocompleteSchoolResult23FromJSON,
     APIAutocompleteSchoolResult23ToJSON,
-} from '../models/index';
+} from '../models/APIAutocompleteSchoolResult23';
 
 export interface AutocompleteDistrictsRequest {
+    /**
+     * Search term for autocomplete (e.g. 'Lincol') (required)
+     */
     q?: string;
+    /**
+     * Two character state (e.g. 'CA') (optional -- leave blank to search entire U.S.)
+     */
     st?: string;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise API levels only.)
+     */
     boxLatitudeNW?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise API levels only.)
+     */
     boxLongitudeNW?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise API levels only.)
+     */
     boxLatitudeSE?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise API levels only.)
+     */
     boxLongitudeSE?: number;
+    /**
+     * Number of districts to return. Valid values: 1-20. (default: 10)
+     */
     returnCount?: number;
 }
 
 export interface AutocompleteSchoolsRequest {
+    /**
+     * Search term for autocomplete (e.g. 'Lincol') (required)
+     */
     q?: string;
+    /**
+     * Extend the search term to include city and state (e.g. 'Lincoln el paso' matches Lincoln Middle School in El Paso) (optional)
+     */
     qSearchCityStateName?: boolean;
+    /**
+     * Two character state (e.g. 'CA') (optional -- leave blank to search entire U.S.)
+     */
     st?: string;
+    /**
+     * Search for schools at this level only. Valid values: 'Elementary', 'Middle', 'High', 'Alt', 'Private' (optional - leave blank to search for all schools)
+     */
     level?: string;
+    /**
+     * Search within SchoolDigger District ID (optional. Pro, Enterprise, and Autocomplete Pro levels only.)
+     */
     districtID?: string;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise, and Autocomplete Pro levels only.)
+     */
     boxLatitudeNW?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise, and Autocomplete Pro levels only.)
+     */
     boxLongitudeNW?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise, and Autocomplete Pro levels only.)
+     */
     boxLatitudeSE?: number;
+    /**
+     * Search within a 'box' defined by (BoxLatitudeNW/BoxLongitudeNW) to (BoxLongitudeSE/BoxLatitudeSE) (optional. Pro, Enterprise, and Autocomplete Pro levels only.)
+     */
     boxLongitudeSE?: number;
+    /**
+     * Number of schools to return. Valid values: 1-20. (default: 10)
+     */
     returnCount?: number;
 }
 

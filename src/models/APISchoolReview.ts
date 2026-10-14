@@ -21,26 +21,18 @@ import { mapValues } from '../runtime';
 export interface APISchoolReview {
     /**
      * The date the review was submitted, formatted as M/D/YYYY (e.g. '1/24/2009'). Note: single-digit months and days are not zero-padded.
-     * @type {string}
-     * @memberof APISchoolReview
      */
     submitDate?: string;
     /**
      * Number of stars - 1 (poor) to 5 (excellent)
-     * @type {number}
-     * @memberof APISchoolReview
      */
     numberOfStars?: number;
     /**
      * Free-text comment left by the reviewer. Content is HTML encoded (special characters escaped). May be empty string if reviewer only left a star rating.
-     * @type {string}
-     * @memberof APISchoolReview
      */
     comment?: string;
     /**
      * Reviewer type (parent, student, teacher, principal, citizen)
-     * @type {string}
-     * @memberof APISchoolReview
      */
     submittedBy?: string;
 }

@@ -12,48 +12,125 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  APISchoolFull31Ranges,
-  APISchoolList31,
-} from '../models/index';
 import {
+    type APISchoolFull31Ranges,
     APISchoolFull31RangesFromJSON,
     APISchoolFull31RangesToJSON,
+} from '../models/APISchoolFull31Ranges';
+import {
+    type APISchoolList31,
     APISchoolList31FromJSON,
     APISchoolList31ToJSON,
-} from '../models/index';
+} from '../models/APISchoolList31';
 
 export interface GetSchoolRequest {
+    /**
+     * The 12 digit School ID (e.g. 064215006903)
+     */
     id: string;
+    /**
+     * true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)
+     */
     includeRanges?: boolean;
 }
 
 export interface SearchSchoolsRequest {
+    /**
+     * Two character state (e.g. 'CA') - optional if you supply a location search (nearLatitude/nearLongitude, nearAddress, or box coordinates) or a districtID; required otherwise. Location searches without 'st' may return schools from multiple states.
+     */
     st?: string;
+    /**
+     * Search term - note: will match school name or city (optional)
+     */
     q?: string;
+    /**
+     * For parameter 'q', only search school names instead of school and city (optional)
+     */
     qSearchSchoolNameOnly?: boolean;
+    /**
+     * Search for schools within this district (7 digit district id) (optional)
+     */
     districtID?: string;
+    /**
+     * Search for schools at this level. Valid values: 'Elementary', 'Middle', 'High', 'Alt', 'Public', 'Private' (optional). 'Public' returns all Elementary, Middle, High and Alternative schools
+     */
     level?: string;
+    /**
+     * Search for schools in this city (optional)
+     */
     city?: string;
+    /**
+     * Search for schools in this 5-digit zip code (optional)
+     */
     zip?: string;
+    /**
+     * True = return only magnet schools, False = return only non-magnet schools (optional) (Pro, Enterprise API levels only)
+     */
     isMagnet?: boolean;
+    /**
+     * True = return only charter schools, False = return only non-charter schools (optional) (Pro, Enterprise API levels only)
+     */
     isCharter?: boolean;
+    /**
+     * True = return only virtual schools, False = return only non-virtual schools (optional) (Pro, Enterprise API levels only)
+     */
     isVirtual?: boolean;
+    /**
+     * True = return only Title I schools, False = return only non-Title I schools (optional) (Pro, Enterprise API levels only)
+     */
     isTitleI?: boolean;
+    /**
+     * True = return only Title I school-wide schools, False = return only non-Title I school-wide schools (optional) (Pro, Enterprise API levels only)
+     */
     isTitleISchoolwide?: boolean;
+    /**
+     * Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. 44.982560) (optional) (Pro, Enterprise API levels only.)
+     */
     nearLatitude?: number;
+    /**
+     * Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (e.g. -124.289185) (optional) (Pro, Enterprise API levels only.)
+     */
     nearLongitude?: number;
+    /**
+     * Search for schools within (distanceMiles) of this address. Example: '123 Main St. AnyTown CA 90001' (optional) (Pro, Enterprise API level only) IMPORTANT NOTE: If you have the lat/long of the address, use nearLatitude and nearLongitude instead for much faster response times
+     */
     nearAddress?: string;
+    /**
+     * Search for schools within (distanceMiles) of (nearLatitude)/(nearLongitude) (Default 5 miles) (optional) (Pro, Enterprise API levels only)
+     */
     distanceMiles?: number;
+    /**
+     * Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)
+     */
     boxLatitudeNW?: number;
+    /**
+     * Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)
+     */
     boxLongitudeNW?: number;
+    /**
+     * Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)
+     */
     boxLatitudeSE?: number;
+    /**
+     * Search for schools within a 'box' defined by (boxLatitudeNW/boxLongitudeNW) to (boxLongitudeSE/boxLatitudeSE) (optional)
+     */
     boxLongitudeSE?: number;
+    /**
+     * Page number to retrieve (optional, default: 1)
+     */
     page?: number;
+    /**
+     * Number of schools to retrieve on a page (50 max) (optional, default: 10)
+     */
     perPage?: number;
+    /**
+     * Sort list. Values are: schoolname, distance, rank. For descending order, precede with '-' i.e. -schoolname (optional, default: schoolname)
+     */
     sortBy?: string;
+    /**
+     * If sortBy is 'rank', this boolean determines if schools with no rank are included in the result (optional, default: false)
+     */
     includeUnrankedSchoolsInRankSort?: boolean;
 }
 
@@ -91,7 +168,7 @@ export class SchoolsApi extends runtime.BaseAPI {
 
 
         let urlPath = `/v3.1/schools/{id}`;
-        urlPath = urlPath.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id'])));
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
 
         return {
             path: urlPath,

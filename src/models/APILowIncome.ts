@@ -25,44 +25,30 @@ import { mapValues } from '../runtime';
 export interface APILowIncome {
     /**
      * "FRL" (free/reduced-price lunch eligible), "DC" (directly certified for free meals) or "CEP" (all students receive free meals under the Community Eligibility Provision; no percent)
-     * @type {string}
-     * @memberof APILowIncome
      */
     type?: string;
     /**
      * School year of the value (2025 = 2024-25), as in schoolYearlyDetails.year
-     * @type {number}
-     * @memberof APILowIncome
      */
     year?: number;
     /**
      * Percent of enrolled students (0-100, two decimals). Absent for "CEP".
-     * @type {number}
-     * @memberof APILowIncome
      */
     percent?: number;
     /**
      * Number of students counted (free/reduced eligible for "FRL" and "CEP", directly certified for "DC")
-     * @type {number}
-     * @memberof APILowIncome
      */
     count?: number;
     /**
      * Enrollment the percent is based on (students excluding pre-kindergarten), same school year as count
-     * @type {number}
-     * @memberof APILowIncome
      */
     enrollment?: number;
     /**
      * True when the school's newest usable free/reduced count is 98% or more of enrollment (a sign of the Community Eligibility Provision), whatever type is. A "DC" school can be true.
-     * @type {boolean}
-     * @memberof APILowIncome
      */
     communityEligibilityLikely?: boolean;
     /**
      * True when the state serves free school meals to all students in this school year (state law or state funding)
-     * @type {boolean}
-     * @memberof APILowIncome
      */
     statewideFreeMeals?: boolean;
 }

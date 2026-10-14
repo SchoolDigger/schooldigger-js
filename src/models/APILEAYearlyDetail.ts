@@ -21,134 +21,90 @@ import { mapValues } from '../runtime';
 export interface APILEAYearlyDetail {
     /**
      * School year (2018 = 2017-18)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     year?: number;
     /**
      * Number of students enrolled in the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfStudents?: number;
     /**
      * The number of students having a written Individualized Education Program (IEP) under the Individuals With Disabilities Education Act (IDEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfSpecialEdStudents?: number;
     /**
      * The number of English language learner (ELL) students served in appropriate programs
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfEnglishLanguageLearnerStudents?: number;
     /**
      * Number of full-time equivalent teachers employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfTeachers?: number;
     /**
      * Number of full-time equivalent pre-kindergarten teachers employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfTeachersPK?: number;
     /**
      * Number of full-time equivalent kindergarten teachers employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfTeachersK?: number;
     /**
      * Number of full-time equivalent elementary teachers employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfTeachersElementary?: number;
     /**
      * Number of full-time equivalent secondary teachers employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfTeachersSecondary?: number;
     /**
      * Number of full-time equivalent instructional aids employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfAids?: number;
     /**
      * Number of full-time equivalent instructional coordinators/supervisors employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfCoordsSupervisors?: number;
     /**
      * Number of full-time equivalent elementary guidance counselors employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfGuidanceElem?: number;
     /**
      * Number of full-time equivalent secondary guidance counselors employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfGuidanceSecondary?: number;
     /**
      * Total number of full-time equivalent guidance counselors employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfGuidanceTotal?: number;
     /**
      * Number of full-time equivalent librarians/media specialists employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfLibrarians?: number;
     /**
      * Number of full-time equivalent librarians/media support staff employed by the district
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfLibraryStaff?: number;
     /**
      * Number of full-time equivalent LEA administrators employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfLEAAdministrators?: number;
     /**
      * Number of full-time equivalent LEA administrative support staff employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfLEASupportStaff?: number;
     /**
      * Number of full-time equivalent school administrators employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfSchoolAdministrators?: number;
     /**
      * Number of full-time equivalent school administrative support staff employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfSchoolAdminSupportStaff?: number;
     /**
      * Number of full-time equivalent student support services staff employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfStudentSupportStaff?: number;
     /**
      * Number of full-time equivalent all other support staff employed by the district (LEA)
-     * @type {number}
-     * @memberof APILEAYearlyDetail
      */
     numberOfOtherSupportStaff?: number;
 }
