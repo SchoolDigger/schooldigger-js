@@ -1,32 +1,27 @@
 
-# APISchoolListRank21
+# APISchoolList31
 
+API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome on each school  (SchoolListSD2_API_11 supplies the measure).
 
 ## Properties
 
 Name | Type
 ------------ | -------------
-`rankYear` | number
-`rankYearCompare` | number
-`rankYearsAvailable` | Array&lt;number&gt;
+`schoolList` | [Array&lt;APISchoolSummary31&gt;](APISchoolSummary31.md)
 `numberOfSchools` | number
 `numberOfPages` | number
-`schoolList` | [Array&lt;APISchoolSummary21&gt;](APISchoolSummary21.md)
 
 ## Example
 
 ```typescript
-import type { APISchoolListRank21 } from 'schooldigger'
+import type { APISchoolList31 } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
-  "rankYear": null,
-  "rankYearCompare": null,
-  "rankYearsAvailable": null,
+  "schoolList": null,
   "numberOfSchools": null,
   "numberOfPages": null,
-  "schoolList": null,
-} satisfies APISchoolListRank21
+} satisfies APISchoolList31
 
 console.log(example)
 
@@ -35,7 +30,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as APISchoolListRank21
+const exampleParsed = JSON.parse(exampleJSON) as APISchoolList31
 console.log(exampleParsed)
 ```
 

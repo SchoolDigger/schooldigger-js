@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "v2.4",
+    "version": "v3.1",
     "title": "SchoolDigger API",
     "description": "K-12 school and district data for 120,000+ U.S. schools",
     "termsOfService": "https://developer.schooldigger.com/termsofservice",
@@ -12,7 +12,7 @@
     }
   },
   "paths": {
-    "/v2.4/autocomplete/schools": {
+    "/v3.1/autocomplete/schools": {
       "get": {
         "tags": [
           "Autocomplete"
@@ -131,7 +131,7 @@
         }
       }
     },
-    "/v2.4/autocomplete/districts": {
+    "/v3.1/autocomplete/districts": {
       "get": {
         "tags": [
           "Autocomplete"
@@ -223,40 +223,7 @@
         }
       }
     },
-    "/v2.4/districts/{id}": {
-      "get": {
-        "tags": [
-          "Districts"
-        ],
-        "summary": "Returns a detailed record for one district",
-        "description": "Retrieve a single district record from the SchoolDigger database",
-        "operationId": "getDistrict",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The 7 digit District ID (e.g. 0642150)",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/APIDistrictFull21"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2.4/districts": {
+    "/v3.1/districts": {
       "get": {
         "tags": [
           "Districts"
@@ -442,60 +409,31 @@
         }
       }
     },
-    "/v2.4/rankings/schools/{st}": {
+    "/v3.1/districts/{id}": {
       "get": {
         "tags": [
-          "Rankings"
+          "Districts"
         ],
-        "summary": "Returns a SchoolDigger school ranking list",
-        "operationId": "getSchoolRankings",
+        "summary": "Returns a detailed record for one district",
+        "description": "Retrieve a single district record from the SchoolDigger database. Version 3.0 adds includeRanges: with it, test-score percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent); without it the record is identical to v2.4.",
+        "operationId": "getDistrict",
         "parameters": [
           {
-            "name": "st",
+            "name": "id",
             "in": "path",
-            "description": "Two character state (e.g. 'CA')",
+            "description": "The 7 digit District ID (e.g. 0642150)",
             "required": true,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "year",
+            "name": "includeRanges",
             "in": "query",
-            "description": "The ranking year (leave blank for most recent year)",
+            "description": "true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)",
             "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "level",
-            "in": "query",
-            "description": "Level of ranking: 'Elementary', 'Middle', or 'High'",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "description": "Page number to retrieve (optional, default: 1)",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "perPage",
-            "in": "query",
-            "description": "Number of schools to retrieve on a page (50 max) (optional, default: 10)",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "boolean"
             }
           }
         ],
@@ -505,7 +443,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/APISchoolListRank21"
+                  "$ref": "#/components/schemas/APIDistrictFull30"
                 }
               }
             }
@@ -513,7 +451,7 @@
         }
       }
     },
-    "/v2.4/rankings/districts/{st}": {
+    "/v3.1/rankings/districts/{st}": {
       "get": {
         "tags": [
           "Rankings"
@@ -575,13 +513,85 @@
         }
       }
     },
-    "/v2.4/schools/{id}": {
+    "/v3.1/rankings/schools/{st}": {
+      "get": {
+        "tags": [
+          "Rankings"
+        ],
+        "summary": "Returns a SchoolDigger school ranking list",
+        "description": "Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility). FRL and DC values are not comparable.",
+        "operationId": "getSchoolRankings",
+        "parameters": [
+          {
+            "name": "st",
+            "in": "path",
+            "description": "Two character state (e.g. 'CA')",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "The ranking year (leave blank for most recent year)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "level",
+            "in": "query",
+            "description": "Level of ranking: 'Elementary', 'Middle', or 'High'",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number to retrieve (optional, default: 1)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "perPage",
+            "in": "query",
+            "description": "Number of schools to retrieve on a page (50 max) (optional, default: 10)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APISchoolListRank31"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v3.1/schools/{id}": {
       "get": {
         "tags": [
           "Schools"
         ],
         "summary": "Returns a detailed record for one school",
-        "description": "Retrieve a school record from the SchoolDigger database",
+        "description": "Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school's low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. includeRanges works as in 3.0 and only changes test scores.",
         "operationId": "getSchool",
         "parameters": [
           {
@@ -592,6 +602,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "includeRanges",
+            "in": "query",
+            "description": "true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -600,7 +619,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/APISchoolFull22"
+                  "$ref": "#/components/schemas/APISchoolFull31Ranges"
                 }
               }
             }
@@ -608,13 +627,13 @@
         }
       }
     },
-    "/v2.4/schools": {
+    "/v3.1/schools": {
       "get": {
         "tags": [
           "Schools"
         ],
         "summary": "Returns a list of schools",
-        "description": "Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. New in v2.4: location searches (nearLatitude/nearLongitude, nearAddress, or box coordinates) no longer require 'st' and may return schools from more than one state.",
+        "description": "Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility).",
         "operationId": "searchSchools",
         "parameters": [
           {
@@ -849,7 +868,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/APISchoolList22"
+                  "$ref": "#/components/schemas/APISchoolList31"
                 }
               }
             }
@@ -1017,11 +1036,34 @@
           }
         }
       },
-      "APIDistrictFull21": {
+      "APIDistrictList21": {
+        "type": "object",
+        "properties": {
+          "districtList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIDistrictSummary21"
+            }
+          },
+          "numberOfDistricts": {
+            "format": "int32",
+            "description": "The total count of districts that match your query",
+            "type": "integer",
+            "readOnly": false
+          },
+          "numberOfPages": {
+            "format": "int32",
+            "description": "The total count of pages in your query list based on given per_page value",
+            "type": "integer",
+            "readOnly": false
+          }
+        }
+      },
+      "APIDistrictSummary21": {
         "type": "object",
         "properties": {
           "districtID": {
-            "description": "SchoolDigger District ID Number (7 digits)",
+            "description": "SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the entire district record",
             "type": "string",
             "readOnly": false
           },
@@ -1041,6 +1083,29 @@
           "address": {
             "$ref": "#/components/schemas/APILocation"
           },
+          "locationIsWithinBoundary": {
+            "description": "Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress (Enterprise API level)",
+            "type": "boolean",
+            "readOnly": false
+          },
+          "hasBoundary": {
+            "description": "Indicates that an attendance boundary is available for this district. (To retrieve, look up district with /districts/{id})",
+            "type": "boolean",
+            "readOnly": false
+          },
+          "distance": {
+            "format": "double",
+            "description": "Distance in miles from the nearLatitude/nearLongitude coordinates (only populated when proximity search parameters are provided)",
+            "type": "number"
+          },
+          "isWithinBoundary": {
+            "description": "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude",
+            "type": "boolean",
+            "readOnly": false
+          },
+          "county": {
+            "$ref": "#/components/schemas/APICounty"
+          },
           "lowGrade": {
             "description": "The low grade served by this district (PK = Prekindergarten, K = Kindergarten)",
             "type": "string",
@@ -1053,70 +1118,36 @@
           },
           "numberTotalSchools": {
             "format": "int32",
+            "description": "Count of schools in the district",
             "type": "integer",
             "readOnly": false
           },
           "numberPrimarySchools": {
             "format": "int32",
+            "description": "Count of schools designated as primary schools",
             "type": "integer",
             "readOnly": false
           },
           "numberMiddleSchools": {
             "format": "int32",
+            "description": "Count of schools designated as middle schools",
             "type": "integer",
             "readOnly": false
           },
           "numberHighSchools": {
             "format": "int32",
+            "description": "Count of schools designated as high schools",
             "type": "integer",
             "readOnly": false
           },
           "numberAlternativeSchools": {
             "format": "int32",
+            "description": "Count of schools designated as other/alternative schools",
             "type": "integer",
             "readOnly": false
           },
-          "boundary": {
-            "$ref": "#/components/schemas/APIBoundary12"
-          },
-          "finance": {
-            "description": "Yearly per-student spending data. Array is sorted most recent year first. spendingPerStudent is available at Pro level; detailed federal/state/local and personnel/non-personnel breakdowns require Enterprise level.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APISchoolFinance"
-            }
-          },
-          "graduationRates": {
-            "description": "4-year adjusted cohort graduation rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APIGraduationRate"
-            }
-          },
-          "dropoutRates": {
-            "description": "Annual dropout rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APIDropoutRate"
-            }
-          },
-          "chronicAbsenteeismRates": {
-            "description": "Chronic absenteeism rates (students missing 15+ days) at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first. Data availability varies by state.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APIChronicAbsenteeismRate"
-            }
-          },
-          "isWithinBoundary": {
-            "description": "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude",
-            "type": "boolean",
-            "readOnly": false
-          },
-          "county": {
-            "$ref": "#/components/schemas/APICounty"
-          },
           "rankHistory": {
-            "description": "SchoolDigger yearly rank history for this district, sorted most recent year first. Districts are ranked statewide regardless of level.",
+            "description": "SchoolDigger yearly rank history of the district",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/APILEARankHistory"
@@ -1124,18 +1155,10 @@
             "readOnly": false
           },
           "districtYearlyDetails": {
-            "description": "Yearly enrollment and staffing details for this district. Array is sorted most recent year first. Includes detailed FTE staffing breakdowns by role (teachers by level, administrators, counselors, librarians, support staff).",
+            "description": "District yearly metrics",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/APILEAYearlyDetail"
-            },
-            "readOnly": false
-          },
-          "testScores": {
-            "description": "Standardized test score results with district and state comparisons. Each entry represents one test/subject/grade/year combination. District-level records do not include schoolTestScore. Requires Pro or Enterprise API subscription.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APITestScoreWrapper"
             },
             "readOnly": false
           }
@@ -1185,169 +1208,6 @@
           "html": {
             "description": "HTML formatted address",
             "type": "string",
-            "readOnly": false
-          }
-        }
-      },
-      "APIBoundary12": {
-        "type": "object",
-        "properties": {
-          "polylineCollection": {
-            "description": "Collection of one or more Google Maps encoded polylines representing the attendance boundary. IMPORTANT: Polyline strings are JSON-encoded with escaped backslashes (double backslashes). You must unescape before passing to Google Maps decoding functions. Multiple polylines represent districts/schools with non-contiguous boundary areas.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APIPolyline"
-            },
-            "readOnly": false
-          },
-          "polylines": {
-            "description": "Boundary as a WKT (Well-Known Text) MULTIPOLYGON string with explicit latitude/longitude vertices. Can be used directly with GIS software, PostGIS, or any system that accepts WKT geometry. Format: MULTIPOLYGON (((-122.27 47.77, ...)))",
-            "type": "string",
-            "readOnly": false
-          },
-          "hasBoundary": {
-            "description": "States whether there is a boundary available",
-            "type": "boolean",
-            "readOnly": false
-          }
-        }
-      },
-      "APISchoolFinance": {
-        "type": "object",
-        "properties": {
-          "year": {
-            "format": "int32",
-            "description": "Fiscal school year using spring-year convention (e.g. 2024 = the 2023-2024 fiscal year).",
-            "type": "integer",
-            "readOnly": false
-          },
-          "spendingPerStudent": {
-            "format": "float",
-            "description": "Total spending per student from all funds (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingFederalPersonnel": {
-            "format": "float",
-            "description": "Spending per student for Personnel at the Federal Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingFederalNonPersonnel": {
-            "format": "float",
-            "description": "Spending per student for Non-personnel at the Federal Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingStateLocalPersonnel": {
-            "format": "float",
-            "description": "Spending per student for Personnel at the State and Local Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingStateLocalNonPersonnel": {
-            "format": "float",
-            "description": "Spending per student for Non-personnel at the State and Local Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingPerStudentFederal": {
-            "format": "float",
-            "description": "Spending per student at the Federal Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "spendingPerStudentStateLocal": {
-            "format": "float",
-            "description": "Spending per student at the State and Local Level (Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          }
-        }
-      },
-      "APIGraduationRate": {
-        "type": "object",
-        "properties": {
-          "year": {
-            "format": "int32",
-            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
-            "type": "integer",
-            "readOnly": false
-          },
-          "schoolGraduationRate": {
-            "format": "float",
-            "description": "4-Year Graduation Rate at the School Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "districtGraduationRate": {
-            "format": "float",
-            "description": "4-Year Graduation Rate at the District Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "stateGraduationRate": {
-            "format": "float",
-            "description": "4-Year Graduation Rate at the State Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          }
-        }
-      },
-      "APIDropoutRate": {
-        "type": "object",
-        "properties": {
-          "year": {
-            "format": "int32",
-            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
-            "type": "integer",
-            "readOnly": false
-          },
-          "schoolDropoutRate": {
-            "format": "float",
-            "description": "Dropout Rate at the School Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "districtDropoutRate": {
-            "format": "float",
-            "description": "Dropout Rate at the District Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "stateDropoutRate": {
-            "format": "float",
-            "description": "Dropout Rate at the State Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          }
-        }
-      },
-      "APIChronicAbsenteeismRate": {
-        "type": "object",
-        "properties": {
-          "year": {
-            "format": "int32",
-            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
-            "type": "integer",
-            "readOnly": false
-          },
-          "schoolChronicAbsenteeismRate": {
-            "format": "float",
-            "description": "ChronicAbsenteeism Rate at the School Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "districtChronicAbsenteeismRate": {
-            "format": "float",
-            "description": "ChronicAbsenteeism Rate at the District Level (Pro or Enterprise level only)",
-            "type": "number",
-            "readOnly": false
-          },
-          "stateChronicAbsenteeismRate": {
-            "format": "float",
-            "description": "ChronicAbsenteeism Rate at the State Level (Pro or Enterprise level only)",
-            "type": "number",
             "readOnly": false
           }
         }
@@ -1522,7 +1382,148 @@
           }
         }
       },
-      "APITestScoreWrapper": {
+      "APILatLong": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "format": "double",
+            "description": "Latitude coordinate of the school or district address (WGS84 decimal degrees)",
+            "type": "number"
+          },
+          "longitude": {
+            "format": "double",
+            "description": "Longitude coordinate of the school or district address (WGS84 decimal degrees, negative for Western Hemisphere)",
+            "type": "number"
+          }
+        }
+      },
+      "APIDistrictFull30": {
+        "description": "District detail record for API 3.0. Identical to 2.4 (APIDistrictFull21) except testScores, whose percent metrics\r\nare a number or an APIReportedPercent object and whose rows are no longer limited to what the pre-2026 importers\r\nproduced (docs/suppressed-test-values-spec.md R6).",
+        "type": "object",
+        "properties": {
+          "testScores": {
+            "description": "Standardized test score results with district and state comparisons. Each entry represents one test/subject/grade/year combination. District-level records do not include schoolTestScore. Percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent). Requires Pro or Enterprise API subscription.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APITestScoreWrapper30"
+            },
+            "readOnly": false
+          },
+          "districtID": {
+            "description": "SchoolDigger District ID Number (7 digits)",
+            "type": "string",
+            "readOnly": false
+          },
+          "districtName": {
+            "description": "District name",
+            "type": "string"
+          },
+          "phone": {
+            "description": "District phone number",
+            "type": "string"
+          },
+          "url": {
+            "description": "SchoolDigger URL for this district",
+            "type": "string",
+            "readOnly": false
+          },
+          "address": {
+            "$ref": "#/components/schemas/APILocation"
+          },
+          "lowGrade": {
+            "description": "The low grade served by this district (PK = Prekindergarten, K = Kindergarten)",
+            "type": "string",
+            "readOnly": false
+          },
+          "highGrade": {
+            "description": "The high grade served by this district",
+            "type": "string",
+            "readOnly": false
+          },
+          "numberTotalSchools": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": false
+          },
+          "numberPrimarySchools": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": false
+          },
+          "numberMiddleSchools": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": false
+          },
+          "numberHighSchools": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": false
+          },
+          "numberAlternativeSchools": {
+            "format": "int32",
+            "type": "integer",
+            "readOnly": false
+          },
+          "boundary": {
+            "$ref": "#/components/schemas/APIBoundary12"
+          },
+          "finance": {
+            "description": "Yearly per-student spending data. Array is sorted most recent year first. spendingPerStudent is available at Pro level; detailed federal/state/local and personnel/non-personnel breakdowns require Enterprise level.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APISchoolFinance"
+            }
+          },
+          "graduationRates": {
+            "description": "4-year adjusted cohort graduation rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIGraduationRate"
+            }
+          },
+          "dropoutRates": {
+            "description": "Annual dropout rates at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIDropoutRate"
+            }
+          },
+          "chronicAbsenteeismRates": {
+            "description": "Chronic absenteeism rates (students missing 15+ days) at district and state levels (Pro and Enterprise API level only). Array is sorted most recent year first. Data availability varies by state.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIChronicAbsenteeismRate"
+            }
+          },
+          "isWithinBoundary": {
+            "description": "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude",
+            "type": "boolean",
+            "readOnly": false
+          },
+          "county": {
+            "$ref": "#/components/schemas/APICounty"
+          },
+          "rankHistory": {
+            "description": "SchoolDigger yearly rank history for this district, sorted most recent year first. Districts are ranked statewide regardless of level.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APILEARankHistory"
+            },
+            "readOnly": false
+          },
+          "districtYearlyDetails": {
+            "description": "Yearly enrollment and staffing details for this district. Array is sorted most recent year first. Includes detailed FTE staffing breakdowns by role (teachers by level, administrators, counselors, librarians, support staff).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APILEAYearlyDetail"
+            },
+            "readOnly": false
+          }
+        }
+      },
+      "APITestScoreWrapper30": {
+        "description": "One test / subject / grade / year entry as returned by API 3.0, with school, district and state APITestScore30\r\nobjects. Unlike API 2.4 (APITestScoreWrapper) it does not hide rows the pre-2026 importer would not have\r\nproduced (spec R0 Invariant 2): a score object is present whenever the state reported anything for that level,\r\nand the entry is present whenever at least one score object is.",
         "type": "object",
         "properties": {
           "test": {
@@ -1547,13 +1548,13 @@
             "readOnly": false
           },
           "schoolTestScore": {
-            "$ref": "#/components/schemas/APITestScore"
+            "$ref": "#/components/schemas/APITestScore30"
           },
           "districtTestScore": {
-            "$ref": "#/components/schemas/APITestScore"
+            "$ref": "#/components/schemas/APITestScore30"
           },
           "stateTestScore": {
-            "$ref": "#/components/schemas/APITestScore"
+            "$ref": "#/components/schemas/APITestScore30"
           },
           "tier1": {
             "description": "Label for the lowest performance tier on this test (e.g. 'Below Basic', 'Level 1'). Tier labels are state-specific. Enterprise API level only.",
@@ -1582,18 +1583,166 @@
           }
         }
       },
-      "APILatLong": {
+      "APIBoundary12": {
         "type": "object",
         "properties": {
-          "latitude": {
-            "format": "double",
-            "description": "Latitude coordinate of the school or district address (WGS84 decimal degrees)",
-            "type": "number"
+          "polylineCollection": {
+            "description": "Collection of one or more Google Maps encoded polylines representing the attendance boundary. IMPORTANT: Polyline strings are JSON-encoded with escaped backslashes (double backslashes). You must unescape before passing to Google Maps decoding functions. Multiple polylines represent districts/schools with non-contiguous boundary areas.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIPolyline"
+            },
+            "readOnly": false
           },
-          "longitude": {
-            "format": "double",
-            "description": "Longitude coordinate of the school or district address (WGS84 decimal degrees, negative for Western Hemisphere)",
-            "type": "number"
+          "polylines": {
+            "description": "Boundary as a WKT (Well-Known Text) MULTIPOLYGON string with explicit latitude/longitude vertices. Can be used directly with GIS software, PostGIS, or any system that accepts WKT geometry. Format: MULTIPOLYGON (((-122.27 47.77, ...)))",
+            "type": "string",
+            "readOnly": false
+          },
+          "hasBoundary": {
+            "description": "States whether there is a boundary available",
+            "type": "boolean",
+            "readOnly": false
+          }
+        }
+      },
+      "APISchoolFinance": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "Fiscal school year using spring-year convention (e.g. 2024 = the 2023-2024 fiscal year).",
+            "type": "integer",
+            "readOnly": false
+          },
+          "spendingPerStudent": {
+            "format": "float",
+            "description": "Total spending per student from all funds (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingFederalPersonnel": {
+            "format": "float",
+            "description": "Spending per student for Personnel at the Federal Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingFederalNonPersonnel": {
+            "format": "float",
+            "description": "Spending per student for Non-personnel at the Federal Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingStateLocalPersonnel": {
+            "format": "float",
+            "description": "Spending per student for Personnel at the State and Local Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingStateLocalNonPersonnel": {
+            "format": "float",
+            "description": "Spending per student for Non-personnel at the State and Local Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingPerStudentFederal": {
+            "format": "float",
+            "description": "Spending per student at the Federal Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "spendingPerStudentStateLocal": {
+            "format": "float",
+            "description": "Spending per student at the State and Local Level (Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          }
+        }
+      },
+      "APIGraduationRate": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
+            "type": "integer",
+            "readOnly": false
+          },
+          "schoolGraduationRate": {
+            "format": "float",
+            "description": "4-Year Graduation Rate at the School Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "districtGraduationRate": {
+            "format": "float",
+            "description": "4-Year Graduation Rate at the District Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "stateGraduationRate": {
+            "format": "float",
+            "description": "4-Year Graduation Rate at the State Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          }
+        }
+      },
+      "APIDropoutRate": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
+            "type": "integer",
+            "readOnly": false
+          },
+          "schoolDropoutRate": {
+            "format": "float",
+            "description": "Dropout Rate at the School Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "districtDropoutRate": {
+            "format": "float",
+            "description": "Dropout Rate at the District Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "stateDropoutRate": {
+            "format": "float",
+            "description": "Dropout Rate at the State Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          }
+        }
+      },
+      "APIChronicAbsenteeismRate": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "School year using spring-year convention (e.g. 2025 = the 2024-2025 school year)",
+            "type": "integer",
+            "readOnly": false
+          },
+          "schoolChronicAbsenteeismRate": {
+            "format": "float",
+            "description": "ChronicAbsenteeism Rate at the School Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "districtChronicAbsenteeismRate": {
+            "format": "float",
+            "description": "ChronicAbsenteeism Rate at the District Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
+          },
+          "stateChronicAbsenteeismRate": {
+            "format": "float",
+            "description": "ChronicAbsenteeism Rate at the State Level (Pro or Enterprise level only)",
+            "type": "number",
+            "readOnly": false
           }
         }
       },
@@ -1611,7 +1760,37 @@
           }
         }
       },
-      "APITestScore": {
+      "APIReportedPercent": {
+        "description": "A percent metric (percentMetStandard, percentTier1..5) that the state did not publish as a single exact number.\r\nIn API 3.0 a percent metric is EITHER a plain number (the state reported an exact value) OR this object, and is\r\nabsent when nothing was reported. status is one of: 'range' (the state published only a range: low / high are\r\nthe state's bounds), 'suppressed' (withheld by the state to protect student privacy; no value), 'legacyImputed'\r\n(a pre-2018 SchoolDigger stand-in: value is the 4 / 96 number older API versions return, low / high are the\r\nstate's bounds), 'derived' (computed by SchoolDigger from the other reported levels: value when exact, otherwise\r\nlow / high). Rendering rule: exact 82.3 -&gt; '82.3%'; low 0 -&gt; '&lt; 10%'; high 100 -&gt; '&gt;= 95%'; otherwise\r\n'10-15%'; suppressed -&gt; a dash. See https://developer.schooldigger.com/data-quality",
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "Why there is no exact number: 'range', 'suppressed', 'legacyImputed' or 'derived'",
+            "type": "string",
+            "readOnly": false
+          },
+          "value": {
+            "format": "float",
+            "description": "The percent value, when one exists (status 'derived' with an exact result, or the 'legacyImputed' stand-in). Absent otherwise.",
+            "type": "number",
+            "readOnly": false
+          },
+          "low": {
+            "format": "float",
+            "description": "Lower bound of the range in percent (0 means 'less than high'). Absent for 'suppressed'.",
+            "type": "number",
+            "readOnly": false
+          },
+          "high": {
+            "format": "float",
+            "description": "Upper bound of the range in percent (100 means 'at least low'). Absent for 'suppressed'.",
+            "type": "number",
+            "readOnly": false
+          }
+        }
+      },
+      "APITestScore30": {
+        "description": "One test result (school, district or state level) as returned by API 3.0. Same members as the 2.4 object except\r\nthat the six percent metrics are either a plain number or an APIReportedPercent object (see that class), and a\r\nscore object is returned whenever the state reported anything - including a result that consists only of\r\nsuppressed or ranged values. Hand-written (not inherited from clsSD2testScore) because the number-or-object\r\nunion cannot come from the reflection copy the 2.4 models use.",
         "type": "object",
         "properties": {
           "studentsEligible": {
@@ -1633,10 +1812,17 @@
             "readOnly": false
           },
           "percentMetStandard": {
-            "format": "float",
-            "description": "Percent of students meeting state standard",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students meeting state standard: a number when the state reported an exact value, otherwise an APIReportedPercent object (range, suppressed, legacyImputed or derived). Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           },
           "numberMetStandard": {
             "format": "float",
@@ -1675,49 +1861,96 @@
             "readOnly": false
           },
           "percentTier1": {
-            "format": "float",
-            "description": "Percent of students performing at tier 1 (Enterprise API level only)",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students performing at tier 1 (Enterprise API level only): a number when exact, otherwise an APIReportedPercent object. Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           },
           "percentTier2": {
-            "format": "float",
-            "description": "Percent of students performing at tier 2 (Enterprise API level only)",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students performing at tier 2 (Enterprise API level only): a number when exact, otherwise an APIReportedPercent object. Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           },
           "percentTier3": {
-            "format": "float",
-            "description": "Percent of students performing at tier 3 (Enterprise API level only)",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students performing at tier 3 (Enterprise API level only): a number when exact, otherwise an APIReportedPercent object. Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           },
           "percentTier4": {
-            "format": "float",
-            "description": "Percent of students performing at tier 4 (Enterprise API level only)",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students performing at tier 4 (Enterprise API level only): a number when exact, otherwise an APIReportedPercent object. Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           },
           "percentTier5": {
-            "format": "float",
-            "description": "Percent of students performing at tier 5 (Enterprise API level only)",
-            "type": "number",
-            "readOnly": false
+            "description": "Percent of students performing at tier 5 (Enterprise API level only): a number when exact, otherwise an APIReportedPercent object. Absent when not reported.",
+            "readOnly": false,
+            "oneOf": [
+              {
+                "type": "number",
+                "format": "float"
+              },
+              {
+                "$ref": "#/components/schemas/APIReportedPercent"
+              }
+            ]
           }
         }
       },
-      "APIDistrictList21": {
+      "APIDistrictListRank21": {
         "type": "object",
         "properties": {
-          "districtList": {
+          "rankYear": {
+            "format": "int32",
+            "description": "Year this ranking list represents (2018 = 2017-18)",
+            "type": "integer"
+          },
+          "rankYearCompare": {
+            "format": "int32",
+            "description": "Year rankings returned for comparison (2018 = 2017-18)",
+            "type": "integer"
+          },
+          "rankYearsAvailable": {
+            "description": "The years for which SchoolDigger district rankings are available for this state",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/APIDistrictSummary21"
+              "format": "int32",
+              "type": "integer"
             }
           },
           "numberOfDistricts": {
             "format": "int32",
-            "description": "The total count of districts that match your query",
+            "description": "The total count of districts in the entire rank list",
             "type": "integer",
             "readOnly": false
           },
@@ -1726,117 +1959,31 @@
             "description": "The total count of pages in your query list based on given per_page value",
             "type": "integer",
             "readOnly": false
+          },
+          "districtList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIDistrictSummary21"
+            }
+          },
+          "rankCompareYear": {
+            "format": "int32",
+            "type": "integer"
           }
         }
       },
-      "APIDistrictSummary21": {
+      "APISchoolListRank31": {
+        "description": "API 3.1 school ranking list (/v3.1/rankings/schools/{st}): the v2.1-v3.0 ranking list with lowIncome on each school.",
         "type": "object",
         "properties": {
-          "districtID": {
-            "description": "SchoolDigger District ID Number (7 digits). Use /districts/{districtID} to retrieve the entire district record",
-            "type": "string",
-            "readOnly": false
-          },
-          "districtName": {
-            "description": "District name",
-            "type": "string"
-          },
-          "phone": {
-            "description": "District phone number",
-            "type": "string"
-          },
-          "url": {
-            "description": "SchoolDigger URL for this district",
-            "type": "string",
-            "readOnly": false
-          },
-          "address": {
-            "$ref": "#/components/schemas/APILocation"
-          },
-          "locationIsWithinBoundary": {
-            "description": "Indicates whether this school's boundary includes the specified location from nearLatitude/nearLongitude or boundaryAddress (Enterprise API level)",
-            "type": "boolean",
-            "readOnly": false
-          },
-          "hasBoundary": {
-            "description": "Indicates that an attendance boundary is available for this district. (To retrieve, look up district with /districts/{id})",
-            "type": "boolean",
-            "readOnly": false
-          },
-          "distance": {
-            "format": "double",
-            "description": "Distance in miles from the nearLatitude/nearLongitude coordinates (only populated when proximity search parameters are provided)",
-            "type": "number"
-          },
-          "isWithinBoundary": {
-            "description": "Indicates whether this district's boundary includes the specified location from nearLatitude/nearLongitude",
-            "type": "boolean",
-            "readOnly": false
-          },
-          "county": {
-            "$ref": "#/components/schemas/APICounty"
-          },
-          "lowGrade": {
-            "description": "The low grade served by this district (PK = Prekindergarten, K = Kindergarten)",
-            "type": "string",
-            "readOnly": false
-          },
-          "highGrade": {
-            "description": "The high grade served by this district",
-            "type": "string",
-            "readOnly": false
-          },
-          "numberTotalSchools": {
-            "format": "int32",
-            "description": "Count of schools in the district",
-            "type": "integer",
-            "readOnly": false
-          },
-          "numberPrimarySchools": {
-            "format": "int32",
-            "description": "Count of schools designated as primary schools",
-            "type": "integer",
-            "readOnly": false
-          },
-          "numberMiddleSchools": {
-            "format": "int32",
-            "description": "Count of schools designated as middle schools",
-            "type": "integer",
-            "readOnly": false
-          },
-          "numberHighSchools": {
-            "format": "int32",
-            "description": "Count of schools designated as high schools",
-            "type": "integer",
-            "readOnly": false
-          },
-          "numberAlternativeSchools": {
-            "format": "int32",
-            "description": "Count of schools designated as other/alternative schools",
-            "type": "integer",
-            "readOnly": false
-          },
-          "rankHistory": {
-            "description": "SchoolDigger yearly rank history of the district",
+          "schoolList": {
+            "description": "The schools in the ranking list, each with lowIncome",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/APILEARankHistory"
+              "$ref": "#/components/schemas/APISchoolSummaryRank31"
             },
             "readOnly": false
           },
-          "districtYearlyDetails": {
-            "description": "District yearly metrics",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APILEAYearlyDetail"
-            },
-            "readOnly": false
-          }
-        }
-      },
-      "APISchoolListRank21": {
-        "type": "object",
-        "properties": {
           "rankYear": {
             "format": "int32",
             "description": "Year this ranking list represents (2018 = 2017-18)",
@@ -1866,21 +2013,16 @@
             "description": "The total count of pages this ranking list based on given per_page value",
             "type": "integer",
             "readOnly": false
-          },
-          "schoolList": {
-            "description": "The schools in the ranking list",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APISchoolSummary21"
-            },
-            "readOnly": false
           }
         }
       },
-      "APISchoolSummary21": {
-        "description": "APISchool2Summary: A summary of a school record. For the full school record, call /schools/{id}",
+      "APISchoolSummaryRank31": {
+        "description": "School record in an API 3.1 ranking list: the v2.1-v3.0 ranking record plus lowIncome. Inherits the 2.1 summary,\r\nas 3.0 rankings do, so nothing else changes.",
         "type": "object",
         "properties": {
+          "lowIncome": {
+            "$ref": "#/components/schemas/APILowIncome"
+          },
           "schoolid": {
             "description": "SchoolDigger School ID Number (12 digits)",
             "type": "string",
@@ -2019,6 +2161,44 @@
             "description": "Affiliation of the school (private schools only)",
             "type": "string",
             "readOnly": false
+          }
+        }
+      },
+      "APILowIncome": {
+        "description": "The school's low-income measure (API 3.1; docs/lunch-measures-spec.md R1, R6). One of:\r\n\"FRL\" = students eligible for free or reduced-price school meals;\r\n\"DC\" = students directly certified for free meals (SNAP, TANF, FDPIR, Medicaid in most states, or homeless, migrant, runaway, foster or Head Start), used when the school does not report a usable free/reduced count;\r\n\"CEP\" = the school's free/reduced count is 98% or more of enrollment and it reports no direct certification count, which usually means it serves free meals to all students under the Community Eligibility Provision (no percent).\r\nFRL and DC are not comparable: do not rank or sort one against the other. Values older than 3 years are not used, and counts above enrollment are treated as missing. Absent when the school has no usable value.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "description": "\"FRL\" (free/reduced-price lunch eligible), \"DC\" (directly certified for free meals) or \"CEP\" (all students receive free meals under the Community Eligibility Provision; no percent)",
+            "type": "string"
+          },
+          "year": {
+            "format": "int32",
+            "description": "School year of the value (2025 = 2024-25), as in schoolYearlyDetails.year",
+            "type": "integer"
+          },
+          "percent": {
+            "format": "double",
+            "description": "Percent of enrolled students (0-100, two decimals). Absent for \"CEP\".",
+            "type": "number"
+          },
+          "count": {
+            "format": "int32",
+            "description": "Number of students counted (free/reduced eligible for \"FRL\" and \"CEP\", directly certified for \"DC\")",
+            "type": "integer"
+          },
+          "enrollment": {
+            "format": "int32",
+            "description": "Enrollment the percent is based on (students excluding pre-kindergarten), same school year as count",
+            "type": "integer"
+          },
+          "communityEligibilityLikely": {
+            "description": "True when the school's newest usable free/reduced count is 98% or more of enrollment (a sign of the Community Eligibility Provision), whatever type is. A \"DC\" school can be true.",
+            "type": "boolean"
+          },
+          "statewideFreeMeals": {
+            "description": "True when the state serves free school meals to all students in this school year (state law or state funding)",
+            "type": "boolean"
           }
         }
       },
@@ -2212,54 +2392,29 @@
           }
         }
       },
-      "APIDistrictListRank21": {
+      "APISchoolFull31Ranges": {
+        "description": "School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a\r\nnumber or an APIReportedPercent object) plus lowIncome and the yearly freeReducedLunch / directCertification objects.",
         "type": "object",
         "properties": {
-          "rankYear": {
-            "format": "int32",
-            "description": "Year this ranking list represents (2018 = 2017-18)",
-            "type": "integer"
+          "lowIncome": {
+            "$ref": "#/components/schemas/APILowIncome"
           },
-          "rankYearCompare": {
-            "format": "int32",
-            "description": "Year rankings returned for comparison (2018 = 2017-18)",
-            "type": "integer"
-          },
-          "rankYearsAvailable": {
-            "description": "The years for which SchoolDigger district rankings are available for this state",
+          "schoolYearlyDetails": {
+            "description": "Yearly enrollment, demographics, and staffing for this school, most recent year first. API 3.1 adds freeReducedLunch and directCertification to each year.",
             "type": "array",
             "items": {
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          "numberOfDistricts": {
-            "format": "int32",
-            "description": "The total count of districts in the entire rank list",
-            "type": "integer",
+              "$ref": "#/components/schemas/APIYearlyDemographics31"
+            },
             "readOnly": false
           },
-          "numberOfPages": {
-            "format": "int32",
-            "description": "The total count of pages in your query list based on given per_page value",
-            "type": "integer",
-            "readOnly": false
-          },
-          "districtList": {
+          "testScores": {
+            "description": "Standardized test score results with school, district, and state comparisons. Each entry represents one test/subject/grade/year combination. Percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent). Includes optional tier breakdowns (Enterprise level). Tests are state-specific (e.g. SBA, WCAS in WA; CAASPP in CA). Requires Pro or Enterprise API subscription.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/APIDistrictSummary21"
-            }
+              "$ref": "#/components/schemas/APITestScoreWrapper30"
+            },
+            "readOnly": false
           },
-          "rankCompareYear": {
-            "format": "int32",
-            "type": "integer"
-          }
-        }
-      },
-      "APISchoolFull22": {
-        "type": "object",
-        "properties": {
           "schoolid": {
             "description": "SchoolDigger School ID Number (12 digits)",
             "type": "string",
@@ -2430,22 +2585,134 @@
             "description": "Returns the movement of rank for this school between current and previous year",
             "type": "integer",
             "readOnly": false
+          }
+        }
+      },
+      "APIYearlyDemographics31": {
+        "description": "Yearly enrollment, demographics and staffing for API 3.1: the 3.0 / 2.4 record plus freeReducedLunch and\r\ndirectCertification for that school year (docs/lunch-measures-spec.md R6). percentFreeDiscLunch is unchanged.",
+        "type": "object",
+        "properties": {
+          "freeReducedLunch": {
+            "$ref": "#/components/schemas/APIFreeReducedLunch"
           },
-          "testScores": {
-            "description": "Standardized test score results with school, district, and state comparisons. Each entry represents one test/subject/grade/year combination. Includes percent meeting standard and optional tier breakdowns (Enterprise level). Tests are state-specific (e.g. SBA, WCAS in WA; CAASPP in CA). Requires Pro or Enterprise API subscription.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APITestScoreWrapper"
-            },
+          "directCertification": {
+            "$ref": "#/components/schemas/APIDirectCertification"
+          },
+          "year": {
+            "format": "int32",
+            "description": "School year (2018 = 2017-18)",
+            "type": "integer",
             "readOnly": false
           },
-          "schoolYearlyDetails": {
-            "description": "Yearly enrollment, demographics, and staffing for this school. Array is sorted most recent year first and includes all available years (back to 1988 for some schools). The full record returns more years than the summary in search results.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APIYearlyDemographics"
-            },
+          "numberOfStudents": {
+            "format": "int32",
+            "description": "Count of students attending the school",
+            "type": "integer",
             "readOnly": false
+          },
+          "percentFreeDiscLunch": {
+            "format": "double",
+            "description": "Percent of students receiving a free or discounted lunch in the National School Lunch Program",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofAfricanAmericanStudents": {
+            "format": "double",
+            "description": "Percentage of students who are Black or African American (NCES definition: a person having origins in any of the black racial groups of Africa)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofAsianStudents": {
+            "format": "double",
+            "description": "Percentage of students who are Asian (NCES definition: a person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofHispanicStudents": {
+            "format": "double",
+            "description": "Percentage of students who are Hispanic or Latino (NCES definition: a person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofIndianStudents": {
+            "format": "double",
+            "description": "Percentage of students who are American Indian or Alaska Native (NCES definition: a person having origins in any of the original peoples of North and South America who maintains tribal affiliation or community attachment)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofPacificIslanderStudents": {
+            "format": "double",
+            "description": "Percentage of students who are Native Hawaiian or Other Pacific Islander (NCES definition: a person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofWhiteStudents": {
+            "format": "double",
+            "description": "Percentage of students who are White (NCES definition: a person having origins in any of the original peoples of Europe, the Middle East, or North Africa)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofTwoOrMoreRaceStudents": {
+            "format": "double",
+            "description": "Percentage of students reporting two or more races (not Hispanic/Latino)",
+            "type": "number",
+            "readOnly": false
+          },
+          "percentofUnspecifiedRaceStudents": {
+            "format": "double",
+            "description": "Percentage of students whose race/ethnicity was not specified or reported",
+            "type": "number",
+            "readOnly": false
+          },
+          "teachersFulltime": {
+            "format": "double",
+            "description": "Number of full-time equivalent teachers employed at the school",
+            "type": "number"
+          },
+          "pupilTeacherRatio": {
+            "format": "double",
+            "description": "Number of students / number of full-time equivalent teachers",
+            "type": "number"
+          },
+          "numberofAfricanAmericanStudents": {
+            "format": "int32",
+            "description": "NCES definition: A person having origins in any of the black racial groups of Africa.  (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofAsianStudents": {
+            "format": "int32",
+            "description": "NCES definition: A person having origins in any of the original peoples of the Far East, Southeast Asia, or the Indian subcontinent, including, for example, Cambodia, China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.  (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofHispanicStudents": {
+            "format": "int32",
+            "description": "NCES definition: A person of Cuban, Mexican, Puerto Rican, South or Central American, or other Spanish culture or origin, regardless of race. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofIndianStudents": {
+            "format": "int32",
+            "description": "Count of American Indian or Alaska Native students (NCES definition: a person having origins in any of the original peoples of North and South America who maintains tribal affiliation or community attachment)",
+            "type": "integer"
+          },
+          "numberofPacificIslanderStudents": {
+            "format": "int32",
+            "description": "NCES definition: A person having origins in any of the original peoples of Hawaii, Guam, Samoa, or other Pacific Islands. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofWhiteStudents": {
+            "format": "int32",
+            "description": "NCES definition: A person having origins in any of the original peoples of Europe, the Middle East, or North Africa. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofTwoOrMoreRaceStudents": {
+            "format": "int32",
+            "description": "NCES definition: Includes any combination of two or more races and not Hispanic/Latino ethnicity. (https://nces.ed.gov/statprog/2002/std1_5.asp)",
+            "type": "integer"
+          },
+          "numberofUnspecifiedRaceStudents": {
+            "format": "int32",
+            "description": "Count of students whose race/ethnicity was not specified or reported",
+            "type": "integer"
           }
         }
       },
@@ -2475,9 +2742,54 @@
           }
         }
       },
-      "APISchoolList22": {
+      "APIFreeReducedLunch": {
+        "description": "Students eligible for free or reduced-price school meals in one school year (API 3.1). Either count and percent, or a status when the reported count is not usable as a percent: \"communityEligibility\" (count is 98% or more of enrollment; the school likely serves free meals to all students), \"repeated\" (the state repeated the prior year's counts for most schools; not shown), \"aboveEnrollment\" (count exceeds enrollment; not shown).",
         "type": "object",
         "properties": {
+          "status": {
+            "description": "Absent when count and percent are usable; otherwise \"communityEligibility\", \"repeated\" or \"aboveEnrollment\"",
+            "type": "string"
+          },
+          "count": {
+            "format": "int32",
+            "description": "Number of students eligible for free or reduced-price meals (absent for \"repeated\" and \"aboveEnrollment\")",
+            "type": "integer"
+          },
+          "percent": {
+            "format": "double",
+            "description": "Percent of enrolled students excluding pre-kindergarten (0-100, two decimals); absent when status is present",
+            "type": "number"
+          }
+        }
+      },
+      "APIDirectCertification": {
+        "description": "Students directly certified for free meals in one school year (API 3.1): approved automatically, without a meal application, through SNAP, TANF, FDPIR or Medicaid (most states), or because they are homeless, migrant, runaway, in foster care or in Head Start. Usually lower than free/reduced lunch eligibility and not comparable to it. Collected from 2016-17.",
+        "type": "object",
+        "properties": {
+          "count": {
+            "format": "int32",
+            "description": "Number of students directly certified for free meals",
+            "type": "integer"
+          },
+          "percent": {
+            "format": "double",
+            "description": "Percent of enrolled students excluding pre-kindergarten (0-100, two decimals)",
+            "type": "number"
+          }
+        }
+      },
+      "APISchoolList31": {
+        "description": "API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome on each school\r\n(SchoolListSD2_API_11 supplies the measure).",
+        "type": "object",
+        "properties": {
+          "schoolList": {
+            "description": "The schools that match your query, each with lowIncome",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APISchoolSummary31"
+            },
+            "readOnly": false
+          },
           "numberOfSchools": {
             "format": "int32",
             "description": "The total count of schools that match your query",
@@ -2489,19 +2801,16 @@
             "description": "The total count of pages in your query list based on given per_page value",
             "type": "integer",
             "readOnly": false
-          },
-          "schoolList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/APISchoolSummary22"
-            }
           }
         }
       },
-      "APISchoolSummary22": {
-        "description": "APISchool2Summary: A summary of a school record. For the full school record, call /schools/{id}",
+      "APISchoolSummary31": {
+        "description": "School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome.",
         "type": "object",
         "properties": {
+          "lowIncome": {
+            "$ref": "#/components/schemas/APILowIncome"
+          },
           "schoolid": {
             "description": "SchoolDigger School ID Number (12 digits)",
             "type": "string",

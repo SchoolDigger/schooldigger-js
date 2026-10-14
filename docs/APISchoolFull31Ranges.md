@@ -1,12 +1,14 @@
 
-# APISchoolFull30
+# APISchoolFull31Ranges
 
-School detail record for API 3.0. Identical to 2.4 (APISchoolFull22) except testScores, whose percent metrics are  a number or an APIReportedPercent object and whose rows are no longer limited to what the pre-2026 importers  produced (docs/suppressed-test-values-spec.md R6).
+School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a  number or an APIReportedPercent object) plus lowIncome and the yearly freeReducedLunch / directCertification objects.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`lowIncome` | [APILowIncome](APILowIncome.md)
+`schoolYearlyDetails` | [Array&lt;APIYearlyDemographics31&gt;](APIYearlyDemographics31.md)
 `testScores` | [Array&lt;APITestScoreWrapper30&gt;](APITestScoreWrapper30.md)
 `schoolid` | string
 `schoolName` | string
@@ -40,15 +42,16 @@ Name | Type
 `chronicAbsenteeismRates` | [Array&lt;APIChronicAbsenteeismRate&gt;](APIChronicAbsenteeismRate.md)
 `rankHistory` | [Array&lt;APIRankHistory&gt;](APIRankHistory.md)
 `rankMovement` | number
-`schoolYearlyDetails` | [Array&lt;APIYearlyDemographics&gt;](APIYearlyDemographics.md)
 
 ## Example
 
 ```typescript
-import type { APISchoolFull30 } from 'schooldigger'
+import type { APISchoolFull31Ranges } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
+  "lowIncome": null,
+  "schoolYearlyDetails": null,
   "testScores": null,
   "schoolid": null,
   "schoolName": null,
@@ -82,8 +85,7 @@ const example = {
   "chronicAbsenteeismRates": null,
   "rankHistory": null,
   "rankMovement": null,
-  "schoolYearlyDetails": null,
-} satisfies APISchoolFull30
+} satisfies APISchoolFull31Ranges
 
 console.log(example)
 
@@ -92,7 +94,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as APISchoolFull30
+const exampleParsed = JSON.parse(exampleJSON) as APISchoolFull31Ranges
 console.log(exampleParsed)
 ```
 

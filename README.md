@@ -45,8 +45,8 @@ console.log(`Enrollment: ${detail.schoolYearlyDetails[0].numberOfStudents}`);
 
 ## Test scores in API 3.0
 
-This version of the SDK targets API 3.0. Pass `includeRanges: true` to `getSchool` / `getDistrict`
-(without it the record is identical to API 2.4). Each test-score percent
+Pass `includeRanges: true` to `getSchool` / `getDistrict` (without it, test scores are as
+in API 2.4). Each test-score percent
 (`percentMetStandard`, `percentTier1` ... `percentTier5`) is **either a `number` or an
 `APIReportedPercent` object** (`status` of `range`, `suppressed`, `legacyImputed` or `derived`,
 with optional `value`, `low`, `high`), and is `undefined` when the state reported nothing:
@@ -69,6 +69,32 @@ for (const ts of school.testScores ?? []) {
 
 See [Data Quality and Suppression](https://developer.schooldigger.com/data-quality) for the full
 vocabulary and rendering rule. API 2.4 and below (SDK 1.x) return only exact values.
+
+## Low-income measure in API 3.1
+
+SDK 3.0 targets API 3.1. School records from `getSchool`, `searchSchools` and
+`getSchoolRankings` carry `lowIncome`: the school's one low-income measure, `type` `"FRL"`
+(free/reduced-price lunch eligible), `"DC"` (directly certified for free meals; used where the
+school reports no usable free/reduced count) or `"CEP"` (likely serves free meals to all
+students under the Community Eligibility Provision; no `percent`), with `year`, `percent`,
+`count`, `enrollment`, `communityEligibilityLikely` and `statewideFreeMeals`. It is
+`undefined` when the school has no usable value. FRL and DC are not comparable: don't sort one
+against the other.
+
+```ts
+const school = await api.getSchool({ id: '250309000385' });
+const li = school.lowIncome;
+const sy = (y: number) => `${y - 1}-${String(y % 100).padStart(2, '0')}`;
+if (!li) console.log('no low-income figure');
+else if (li.type === 'CEP') console.log(`All students receive free meals (Community Eligibility, ${sy(li.year!)})`);
+else console.log(`${li.type === 'FRL' ? 'Free/reduced lunch eligible' : 'Directly certified for free meals'}: ${li.percent}% (${sy(li.year!)})`);
+```
+
+Each yearly detail has `freeReducedLunch` (count and percent, or a `status` of
+`communityEligibility`, `repeated` or `aboveEnrollment`) and `directCertification`. SDK 3.0
+renames the school models for API 3.1, a breaking change for code that imports them by name (`APISchoolFull31Ranges`, `APISchoolList31`,
+`APISchoolSummary31`, `APISchoolListRank31`, `APISchoolSummaryRank31`). See
+[Low-income measures](https://developer.schooldigger.com/data-quality#low-income).
 
 ## Authentication
 

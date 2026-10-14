@@ -4,8 +4,8 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getDistrictRankings**](RankingsApi.md#getdistrictrankings) | **GET** /v3.0/rankings/districts/{st} | Returns a SchoolDigger district ranking list |
-| [**getSchoolRankings**](RankingsApi.md#getschoolrankings) | **GET** /v3.0/rankings/schools/{st} | Returns a SchoolDigger school ranking list |
+| [**getDistrictRankings**](RankingsApi.md#getdistrictrankings) | **GET** /v3.1/rankings/districts/{st} | Returns a SchoolDigger district ranking list |
+| [**getSchoolRankings**](RankingsApi.md#getschoolrankings) | **GET** /v3.1/rankings/schools/{st} | Returns a SchoolDigger school ranking list |
 
 
 
@@ -91,9 +91,11 @@ example().catch(console.error);
 
 ## getSchoolRankings
 
-> APISchoolListRank21 getSchoolRankings(st, year, level, page, perPage)
+> APISchoolListRank31 getSchoolRankings(st, year, level, page, perPage)
 
 Returns a SchoolDigger school ranking list
+
+Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility). FRL and DC values are not comparable.
 
 ### Example
 
@@ -152,7 +154,7 @@ example().catch(console.error);
 
 ### Return type
 
-[**APISchoolListRank21**](APISchoolListRank21.md)
+[**APISchoolListRank31**](APISchoolListRank31.md)
 
 ### Authorization
 

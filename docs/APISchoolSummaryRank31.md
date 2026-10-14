@@ -1,12 +1,13 @@
 
-# APISchoolSummary22
+# APISchoolSummaryRank31
 
-APISchool2Summary: A summary of a school record. For the full school record, call /schools/{id}
+School record in an API 3.1 ranking list: the v2.1-v3.0 ranking record plus lowIncome. Inherits the 2.1 summary,  as 3.0 rankings do, so nothing else changes.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`lowIncome` | [APILowIncome](APILowIncome.md)
 `schoolid` | string
 `schoolName` | string
 `phone` | string
@@ -34,15 +35,15 @@ Name | Type
 `privateHasLibrary` | boolean
 `privateCoed` | string
 `privateOrientation` | string
-`ncesPrivateSchoolID` | string
 
 ## Example
 
 ```typescript
-import type { APISchoolSummary22 } from 'schooldigger'
+import type { APISchoolSummaryRank31 } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
+  "lowIncome": null,
   "schoolid": null,
   "schoolName": null,
   "phone": null,
@@ -70,8 +71,7 @@ const example = {
   "privateHasLibrary": null,
   "privateCoed": null,
   "privateOrientation": null,
-  "ncesPrivateSchoolID": null,
-} satisfies APISchoolSummary22
+} satisfies APISchoolSummaryRank31
 
 console.log(example)
 
@@ -80,7 +80,7 @@ const exampleJSON: string = JSON.stringify(example)
 console.log(exampleJSON)
 
 // Parse the JSON string back to an object
-const exampleParsed = JSON.parse(exampleJSON) as APISchoolSummary22
+const exampleParsed = JSON.parse(exampleJSON) as APISchoolSummaryRank31
 console.log(exampleParsed)
 ```
 

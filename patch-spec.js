@@ -20,9 +20,12 @@ const operationIdMap = {
   'Districts_GetDistrict30': 'getDistrict',
   'Schools_GetAllSchools22': 'searchSchools',
   'Schools_GetAllSchools24': 'searchSchools',
+  'Schools_GetAllSchools31': 'searchSchools',
   'Schools_GetSchool22': 'getSchool',
   'Schools_GetSchool30': 'getSchool',
+  'Schools_GetSchool31': 'getSchool',
   'Rankings_GetSchoolRank21': 'getSchoolRankings',
+  'Rankings_GetSchoolRank31': 'getSchoolRankings',
   'Rankings_GetRank_District': 'getDistrictRankings',
   'Rankings_GetDistrictRank21': 'getDistrictRankings',
 };

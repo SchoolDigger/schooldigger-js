@@ -4,18 +4,18 @@ All URIs are relative to *https://api.schooldigger.com*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getSchool**](SchoolsApi.md#getschool) | **GET** /v3.0/schools/{id} | Returns a detailed record for one school |
-| [**searchSchools**](SchoolsApi.md#searchschools) | **GET** /v3.0/schools | Returns a list of schools |
+| [**getSchool**](SchoolsApi.md#getschool) | **GET** /v3.1/schools/{id} | Returns a detailed record for one school |
+| [**searchSchools**](SchoolsApi.md#searchschools) | **GET** /v3.1/schools | Returns a list of schools |
 
 
 
 ## getSchool
 
-> APISchoolFull30 getSchool(id, includeRanges)
+> APISchoolFull31Ranges getSchool(id, includeRanges)
 
 Returns a detailed record for one school
 
-Retrieve a school record from the SchoolDigger database. Version 3.0 adds includeRanges: with it, test-score percent metrics are a number when the state reported an exact value, otherwise an object describing a range, a suppressed value, a legacy stand-in or a derived value (see APIReportedPercent); without it the record is identical to v2.4.
+Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school\&#39;s low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. includeRanges works as in 3.0 and only changes test scores.
 
 ### Example
 
@@ -39,7 +39,7 @@ async function example() {
   const body = {
     // string | The 12 digit School ID (e.g. 064215006903)
     id: id_example,
-    // boolean | true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\'range\', \'suppressed\', \'legacyImputed\' or \'derived\') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) (optional)
+    // boolean | true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\'range\', \'suppressed\', \'legacyImputed\' or \'derived\') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) (optional)
     includeRanges: true,
   } satisfies GetSchoolRequest;
 
@@ -61,11 +61,11 @@ example().catch(console.error);
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **id** | `string` | The 12 digit School ID (e.g. 064215006903) | [Defaults to `undefined`] |
-| **includeRanges** | `boolean` | true &#x3D; return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\&#39;range\&#39;, \&#39;suppressed\&#39;, \&#39;legacyImputed\&#39; or \&#39;derived\&#39;) and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) &#x3D; the record is identical to v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) | [Optional] [Defaults to `undefined`] |
+| **includeRanges** | `boolean` | true &#x3D; return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status (\&#39;range\&#39;, \&#39;suppressed\&#39;, \&#39;legacyImputed\&#39; or \&#39;derived\&#39;) and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) &#x3D; test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional) | [Optional] [Defaults to `undefined`] |
 
 ### Return type
 
-[**APISchoolFull30**](APISchoolFull30.md)
+[**APISchoolFull31Ranges**](APISchoolFull31Ranges.md)
 
 ### Authorization
 
@@ -87,11 +87,11 @@ example().catch(console.error);
 
 ## searchSchools
 
-> APISchoolList22 searchSchools(st, q, qSearchSchoolNameOnly, districtID, level, city, zip, isMagnet, isCharter, isVirtual, isTitleI, isTitleISchoolwide, nearLatitude, nearLongitude, nearAddress, distanceMiles, boxLatitudeNW, boxLongitudeNW, boxLatitudeSE, boxLongitudeSE, page, perPage, sortBy, includeUnrankedSchoolsInRankSort)
+> APISchoolList31 searchSchools(st, q, qSearchSchoolNameOnly, districtID, level, city, zip, isMagnet, isCharter, isVirtual, isTitleI, isTitleISchoolwide, nearLatitude, nearLongitude, nearAddress, distanceMiles, boxLatitudeNW, boxLongitudeNW, boxLatitudeSE, boxLongitudeSE, page, perPage, sortBy, includeUnrankedSchoolsInRankSort)
 
 Returns a list of schools
 
-Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. New in v2.4: location searches (nearLatitude/nearLongitude, nearAddress, or box coordinates) no longer require \&#39;st\&#39; and may return schools from more than one state.
+Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility).
 
 ### Example
 
@@ -207,7 +207,7 @@ example().catch(console.error);
 
 ### Return type
 
-[**APISchoolList22**](APISchoolList22.md)
+[**APISchoolList31**](APISchoolList31.md)
 
 ### Authorization
 
