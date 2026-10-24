@@ -33,6 +33,10 @@ export interface GetSchoolRequest {
      * true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)
      */
     includeRanges?: boolean;
+    /**
+     * true = vaccination.figures holds every grade and every school year with published vaccination figures (years within your plan's yearly history window, as schoolYearlyDetails); false (default) = one grade (the headline grade, else the first grade published for the school) for its most recent year. vaccination.gradesAvailable and vaccination.yearsAvailable list what exists either way. (optional)
+     */
+    includeVaccinationDetail?: boolean;
 }
 
 export interface SearchSchoolsRequest {
@@ -156,6 +160,10 @@ export class SchoolsApi extends runtime.BaseAPI {
             queryParameters['includeRanges'] = requestParameters['includeRanges'];
         }
 
+        if (requestParameters['includeVaccinationDetail'] != null) {
+            queryParameters['includeVaccinationDetail'] = requestParameters['includeVaccinationDetail'];
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -179,7 +187,7 @@ export class SchoolsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school\'s low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. includeRanges works as in 3.0 and only changes test scores.
+     * Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school\'s low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. It also adds vaccination: the state\'s published vaccination rates for the school (source, headline and every figure by year, grade, vaccine and status, with the state\'s own district, county and state figures for the same measures; by default the headline grade for its most recent year; includeVaccinationDetail=true for every grade and year). includeRanges works as in 3.0 and only changes test scores.
      * Returns a detailed record for one school
      */
     async getSchoolRaw(requestParameters: GetSchoolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<APISchoolFull31Ranges>> {
@@ -190,7 +198,7 @@ export class SchoolsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school\'s low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. includeRanges works as in 3.0 and only changes test scores.
+     * Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school\'s low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. It also adds vaccination: the state\'s published vaccination rates for the school (source, headline and every figure by year, grade, vaccine and status, with the state\'s own district, county and state figures for the same measures; by default the headline grade for its most recent year; includeVaccinationDetail=true for every grade and year). includeRanges works as in 3.0 and only changes test scores.
      * Returns a detailed record for one school
      */
     async getSchool(requestParameters: GetSchoolRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<APISchoolFull31Ranges> {
@@ -322,7 +330,7 @@ export class SchoolsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility).
+     * Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and vaccination (the school\'s vaccination headline as the state published it).
      * Returns a list of schools
      */
     async searchSchoolsRaw(requestParameters: SearchSchoolsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<APISchoolList31>> {
@@ -333,7 +341,7 @@ export class SchoolsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility).
+     * Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and vaccination (the school\'s vaccination headline as the state published it).
      * Returns a list of schools
      */
     async searchSchools(requestParameters: SearchSchoolsRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<APISchoolList31> {

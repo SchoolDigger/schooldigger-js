@@ -1,13 +1,14 @@
 
 # APISchoolFull31Ranges
 
-School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a  number or an APIReportedPercent object) plus lowIncome and the yearly freeReducedLunch / directCertification objects.
+School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a  number or an APIReportedPercent object) plus lowIncome, the yearly freeReducedLunch / directCertification objects  and vaccination.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
 `lowIncome` | [APILowIncome](APILowIncome.md)
+`vaccination` | [APIVaccination](APIVaccination.md)
 `schoolYearlyDetails` | [Array&lt;APIYearlyDemographics31&gt;](APIYearlyDemographics31.md)
 `testScores` | [Array&lt;APITestScoreWrapper30&gt;](APITestScoreWrapper30.md)
 `schoolid` | string
@@ -51,6 +52,7 @@ import type { APISchoolFull31Ranges } from 'schooldigger'
 // TODO: Update the object below with actual values
 const example = {
   "lowIncome": null,
+  "vaccination": null,
   "schoolYearlyDetails": null,
   "testScores": null,
   "schoolid": null,

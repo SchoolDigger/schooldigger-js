@@ -96,6 +96,40 @@ renames the school models for API 3.1, a breaking change for code that imports t
 `APISchoolSummary31`, `APISchoolListRank31`, `APISchoolSummaryRank31`). See
 [Low-income measures](https://developer.schooldigger.com/data-quality#low-income).
 
+## Vaccination rates in API 3.1
+
+SDK 3.1 adds `vaccination` to `getSchool`: the state's published vaccination rates for the
+school, with `source` (agency, url, `headlineLabel`, `suppressionNote`, `districtScope`),
+`headline` (the state's lead figure, e.g. kindergartners with all required vaccines: `year`,
+`gradeName`, `antigen`, `status`, `label`, `value`, `students`, `studentsTotal`,
+`exemptionRate`), `districtName` / `countyName` / `stateName`, `yearsAvailable`,
+`gradesAvailable` and `figures` (each year, grade, vaccine and status, with the school's value
+and the state's own district, county and state values). By default `figures` holds the headline
+grade for its most recent year; pass `includeVaccinationDetail: true` for every grade and year.
+`searchSchools` carries the headline alone on each school as `vaccination`. Both are
+`undefined` when the state publishes no vaccination data for the school, so check before use.
+
+Each `value` has a `status`: `'exact'` (`pct`), `'range'` (`rangeLow` / `rangeHigh`),
+`'suppressed'`, `'redactedCount'`, `'countOnly'` (see `students`) or `'invalid'`.
+
+```ts
+const school = await api.getSchool({ id: '530111000200', includeVaccinationDetail: true });
+const v = school.vaccination;
+const h = v?.headline;
+if (!h?.value) console.log('no vaccination headline');
+else {
+  const val = h.value;
+  const text = val.status === 'exact' ? `${val.pct}%`
+    : val.status === 'range' ? `${val.rangeLow}-${val.rangeHigh}%`
+    : val.status;
+  console.log(`${h.label} (${h.year}): ${text}  [${v!.source?.agency}]`);
+  console.log(`${v!.figures?.length} figures for years ${v!.yearsAvailable?.join(', ')}`);
+}
+```
+
+District endpoints are unchanged. See
+[Vaccination rates](https://developer.schooldigger.com/data-quality#vaccination).
+
 ## Authentication
 
 All API calls require an `appID` and `appKey`. Get your free API key at [developer.schooldigger.com](https://developer.schooldigger.com).

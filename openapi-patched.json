@@ -591,7 +591,7 @@
           "Schools"
         ],
         "summary": "Returns a detailed record for one school",
-        "description": "Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school's low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. includeRanges works as in 3.0 and only changes test scores.",
+        "description": "Retrieve a school record from the SchoolDigger database. Version 3.1 adds lowIncome (the school's low-income measure: free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and, for each year in schoolYearlyDetails, freeReducedLunch and directCertification. It also adds vaccination: the state's published vaccination rates for the school (source, headline and every figure by year, grade, vaccine and status, with the state's own district, county and state figures for the same measures; by default the headline grade for its most recent year; includeVaccinationDetail=true for every grade and year). includeRanges works as in 3.0 and only changes test scores.",
         "operationId": "getSchool",
         "parameters": [
           {
@@ -607,6 +607,15 @@
             "name": "includeRanges",
             "in": "query",
             "description": "true = return test-score percent metrics as the state reported them: a number when exact, otherwise an object with a status ('range', 'suppressed', 'legacyImputed' or 'derived') and, when available, value / low / high; rows the state reported only as ranges or suppressed values are included. false (default) = test scores as in v2.4 (exact values only). See https://developer.schooldigger.com/data-quality (optional)",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "includeVaccinationDetail",
+            "in": "query",
+            "description": "true = vaccination.figures holds every grade and every school year with published vaccination figures (years within your plan's yearly history window, as schoolYearlyDetails); false (default) = one grade (the headline grade, else the first grade published for the school) for its most recent year. vaccination.gradesAvailable and vaccination.yearsAvailable list what exists either way. (optional)",
             "required": false,
             "schema": {
               "type": "boolean"
@@ -633,7 +642,7 @@
           "Schools"
         ],
         "summary": "Returns a list of schools",
-        "description": "Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility).",
+        "description": "Search the SchoolDigger database for schools. You may use any combination of criteria as query parameters. Version 3.1 adds lowIncome to each school (free/reduced-price lunch eligibility, else direct certification, else Community Eligibility) and vaccination (the school's vaccination headline as the state published it).",
         "operationId": "searchSchools",
         "parameters": [
           {
@@ -2393,11 +2402,14 @@
         }
       },
       "APISchoolFull31Ranges": {
-        "description": "School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a\r\nnumber or an APIReportedPercent object) plus lowIncome and the yearly freeReducedLunch / directCertification objects.",
+        "description": "School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a\r\nnumber or an APIReportedPercent object) plus lowIncome, the yearly freeReducedLunch / directCertification objects\r\nand vaccination.",
         "type": "object",
         "properties": {
           "lowIncome": {
             "$ref": "#/components/schemas/APILowIncome"
+          },
+          "vaccination": {
+            "$ref": "#/components/schemas/APIVaccination"
           },
           "schoolYearlyDetails": {
             "description": "Yearly enrollment, demographics, and staffing for this school, most recent year first. API 3.1 adds freeReducedLunch and directCertification to each year.",
@@ -2588,6 +2600,95 @@
           }
         }
       },
+      "APIVaccination": {
+        "description": "Vaccination rates as the state published them (API 3.1; docs/vaccination-spec.md R7). Present when the school's (or district's) state publishes vaccination data. By default figures holds one grade (the headline grade, else the first grade published for the school) for its most recent school year; add includeVaccinationDetail=true for every grade and every year (within the plan's yearly history window).",
+        "type": "object",
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/APIVaxSource"
+          },
+          "otherSources": {
+            "description": "Other sources some figures come from (older SchoolDigger sources for early years); absent when none",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxSource"
+            }
+          },
+          "headline": {
+            "$ref": "#/components/schemas/APIVaxHeadline"
+          },
+          "isDistrictFigure": {
+            "description": "True when the state publishes figures for the school's district, not for the school (e.g. TX public schools): figures carry district (and state) values only, which are the district's, never the school's. Absent otherwise",
+            "type": "boolean"
+          },
+          "districtName": {
+            "description": "Name of the district the district figures are for (absent when there are none)",
+            "type": "string"
+          },
+          "countyName": {
+            "description": "Name of the county the county figures are for (absent when there are none)",
+            "type": "string"
+          },
+          "stateName": {
+            "description": "Name of the state the state figures are for (absent when there are none)",
+            "type": "string"
+          },
+          "yearsAvailable": {
+            "description": "School years with published figures for the school (or, without school figures, for its district or county), most recent first",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "gradesAvailable": {
+            "description": "Grades with published figures for the school (or, without school figures, for its district or county), in grade order",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxGrade"
+            }
+          },
+          "detailIncluded": {
+            "description": "True when figures holds every grade and year (includeVaccinationDetail=true); false when it holds one grade for its most recent year",
+            "type": "boolean"
+          },
+          "figures": {
+            "description": "Every published measure for the years returned, most recent year first: the school's own value and the state's published district, county and state values for the same year, grade, vaccine and status. Empty when the state publishes nothing for this school",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxFigure"
+            }
+          },
+          "grades": {
+            "description": "Names of the grade codes used in figures",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxGrade"
+            }
+          },
+          "antigens": {
+            "description": "Names of the vaccine codes used in figures",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxCode"
+            }
+          },
+          "statuses": {
+            "description": "Names and groups (coverage, exemption, other) of the status codes used in figures",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxCode"
+            }
+          },
+          "notes": {
+            "description": "Footnotes referenced by figures and the headline; absent when none apply",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/APIVaxNote"
+            }
+          }
+        }
+      },
       "APIYearlyDemographics31": {
         "description": "Yearly enrollment, demographics and staffing for API 3.1: the 3.0 / 2.4 record plus freeReducedLunch and\r\ndirectCertification for that school year (docs/lunch-measures-spec.md R6). percentFreeDiscLunch is unchanged.",
         "type": "object",
@@ -2742,6 +2843,201 @@
           }
         }
       },
+      "APIVaxSource": {
+        "description": "The state agency and publication the vaccination figures come from (API 3.1).",
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "SchoolDigger source id; figures from another source carry it as sourceId",
+            "type": "integer"
+          },
+          "agency": {
+            "description": "Publishing agency, e.g. \"Washington State Department of Health\"",
+            "type": "string"
+          },
+          "url": {
+            "description": "The agency's page for the data",
+            "type": "string"
+          },
+          "headlineLabel": {
+            "description": "What the state's headline figure measures, e.g. \"Kindergartners complete for all required immunizations\". Absent when the state publishes no headline (e.g. HI: exemptions only)",
+            "type": "string"
+          },
+          "suppressionNote": {
+            "description": "How the state suppresses small groups, when it says so",
+            "type": "string"
+          },
+          "suppressedCountText": {
+            "description": "The meaning of a redacted count, e.g. \"fewer than 10\" (figures with value.status \"redactedCount\")",
+            "type": "string"
+          },
+          "districtScope": {
+            "description": "What the state's district figures cover: \"public\" (public schools only) or \"publicAndPrivate\" (public and private schools in the district's area); absent when the state does not say or publishes no district figures",
+            "type": "string"
+          },
+          "stateFigureLabel": {
+            "description": "What the state figure covers when it is not statewide, e.g. \"reporting schools\" (NC); absent = statewide",
+            "type": "string"
+          },
+          "isLegacy": {
+            "description": "True for figures migrated from an older SchoolDigger source the state no longer publishes in that form",
+            "type": "boolean"
+          }
+        }
+      },
+      "APIVaxHeadline": {
+        "description": "The headline vaccination figure (API 3.1): one grade, vaccine and status per state, as the state leads with it (e.g. kindergartners with all required vaccines, or with MMR where the state publishes no all-vaccine figure).",
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "School year of the value (2026 = 2025-26)",
+            "type": "integer"
+          },
+          "grade": {
+            "description": "Grade code: \"PK\", \"KG\", \"01\"-\"12\", or \"14\" = all grades in the school",
+            "type": "string"
+          },
+          "gradeName": {
+            "description": "Grade name, e.g. \"Kindergarten\", \"All grades\"",
+            "type": "string"
+          },
+          "antigen": {
+            "$ref": "#/components/schemas/APIVaxCode"
+          },
+          "status": {
+            "$ref": "#/components/schemas/APIVaxCode"
+          },
+          "label": {
+            "description": "The state's label for the headline, e.g. \"Kindergartners complete for all required immunizations\"",
+            "type": "string"
+          },
+          "level": {
+            "description": "\"school\"; \"district\" when the state publishes the figure for the school's district only (see isDistrictFigure); \"county\" when the state publishes neither (e.g. NYC public schools: the borough figure); \"district\" on district records",
+            "type": "string"
+          },
+          "isDistrictFigure": {
+            "description": "True when the value is the district's published figure, not the school's (the state reports public schools as districts, e.g. TX). Absent otherwise",
+            "type": "boolean"
+          },
+          "sector": {
+            "description": "\"public\" or \"private\" when the value is a county figure the state published for one sector only (e.g. NYC public schools: the borough's public-school figure); absent otherwise",
+            "type": "string"
+          },
+          "value": {
+            "$ref": "#/components/schemas/APIVaxValue"
+          },
+          "students": {
+            "format": "int32",
+            "description": "Students with this status, when published",
+            "type": "integer"
+          },
+          "studentsTotal": {
+            "format": "int32",
+            "description": "Students the state counted (enrolled, or with a record on file, as the state defines it), when published",
+            "type": "integer"
+          },
+          "exemptionRate": {
+            "format": "double",
+            "description": "Exemption rate (0-100) at the headline grade and year, as published: any exemption, else medical + non-medical, else medical where the state allows only medical exemptions. Absent when not published",
+            "type": "number"
+          },
+          "exemptionAntigen": {
+            "$ref": "#/components/schemas/APIVaxCode"
+          },
+          "notes": {
+            "description": "Ids of the notes (vaccination.notes) that apply to the value",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "APIVaxGrade": {
+        "description": "A grade code and its name (API 3.1 vaccination lookups).",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Grade code: \"PK\", \"KG\", \"01\"-\"12\", or \"14\" = all grades in the school",
+            "type": "string"
+          },
+          "name": {
+            "description": "Grade name, e.g. \"Kindergarten\", \"All grades\"",
+            "type": "string"
+          }
+        }
+      },
+      "APIVaxFigure": {
+        "description": "One published vaccination measure (API 3.1): a school year, grade, vaccine and status, with the value at each level the state publishes it for. A level is absent when the state published nothing for it.",
+        "type": "object",
+        "properties": {
+          "year": {
+            "format": "int32",
+            "description": "School year (2026 = 2025-26)",
+            "type": "integer"
+          },
+          "grade": {
+            "description": "Grade code: \"PK\", \"KG\", \"01\"-\"12\", or \"14\" = all grades in the school (names in vaccination.grades)",
+            "type": "string"
+          },
+          "antigen": {
+            "description": "Vaccine code (names in vaccination.antigens); ALL = all required vaccines",
+            "type": "string"
+          },
+          "status": {
+            "description": "Status code (names and groups in vaccination.statuses)",
+            "type": "string"
+          },
+          "school": {
+            "$ref": "#/components/schemas/APIVaxLevelValue"
+          },
+          "district": {
+            "$ref": "#/components/schemas/APIVaxLevelValue"
+          },
+          "county": {
+            "$ref": "#/components/schemas/APIVaxLevelValue"
+          },
+          "state": {
+            "$ref": "#/components/schemas/APIVaxLevelValue"
+          }
+        }
+      },
+      "APIVaxCode": {
+        "description": "A vaccine (antigen) or a vaccination status: a stable code and its display name (API 3.1). Antigen codes include ALL (all required vaccines), MMR, MEASLES, DTP_TD, TDAP, POLIO, HEPB, VARICELLA, MENACWY; status codes include IMMUNIZED, COMPLIANT, CONDITIONAL, NOT_UP_TO_DATE, EXEMPT_ANY, EXEMPT_MEDICAL, EXEMPT_NONMEDICAL, EXEMPT_RELIGIOUS, EXEMPT_PERSONAL. New codes can be added when a state publishes a new measure.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Stable code, e.g. \"MMR\" (antigen) or \"IMMUNIZED\" (status)",
+            "type": "string"
+          },
+          "name": {
+            "description": "Display name, e.g. \"Measles, mumps, rubella (MMR)\"",
+            "type": "string"
+          },
+          "group": {
+            "description": "Statuses only: \"coverage\" (students who have the vaccines), \"exemption\" (students exempt) or \"other\" (conditional, not up to date, no record and similar)",
+            "type": "string"
+          }
+        }
+      },
+      "APIVaxNote": {
+        "description": "A footnote the state's data carries (API 3.1), e.g. a change of definition between years. Figures list the ids of the notes that apply to them.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "Note id, as listed in a figure's notes",
+            "type": "integer"
+          },
+          "text": {
+            "description": "Note text",
+            "type": "string"
+          }
+        }
+      },
       "APIFreeReducedLunch": {
         "description": "Students eligible for free or reduced-price school meals in one school year (API 3.1). Either count and percent, or a status when the reported count is not usable as a percent: \"communityEligibility\" (count is 98% or more of enrollment; the school likely serves free meals to all students), \"repeated\" (the state repeated the prior year's counts for most schools; not shown), \"aboveEnrollment\" (count exceeds enrollment; not shown).",
         "type": "object",
@@ -2778,12 +3074,94 @@
           }
         }
       },
+      "APIVaxValue": {
+        "description": "A vaccination value as the state published it (API 3.1). status: \"exact\" (pct), \"range\" (rangeLow / rangeHigh; e.g. 95-100 for a published \"95% or more\"), \"suppressed\" (the state withheld the percent, usually for small groups; see source.suppressionNote), \"redactedCount\" (the state withheld a student count, e.g. \"fewer than 10\": see source.suppressedCountText), \"countOnly\" (the state published a count of students, not a percent: see students / studentsTotal) or \"invalid\" (not given: the published value is outside 0-100, qualityFlag 1, or the state's own figures contradict it, e.g. a non-report printed as zeros, qualityFlag 2).",
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "\"exact\", \"range\", \"suppressed\", \"redactedCount\", \"countOnly\" or \"invalid\"",
+            "type": "string"
+          },
+          "pct": {
+            "format": "double",
+            "description": "Percent of students (0-100), as published; status \"exact\" only",
+            "type": "number"
+          },
+          "rangeLow": {
+            "format": "double",
+            "description": "Lower bound of a published range (0-100); status \"range\" only",
+            "type": "number"
+          },
+          "rangeHigh": {
+            "format": "double",
+            "description": "Upper bound of a published range (0-100); status \"range\" only",
+            "type": "number"
+          }
+        }
+      },
+      "APIVaxLevelValue": {
+        "description": "One level's published value for a measure (API 3.1): the school's own figure, or the state's own published district, county or state figure for the same year, grade, vaccine and status. SchoolDigger never calculates district, county or state figures; they appear only where the state publishes them.",
+        "type": "object",
+        "properties": {
+          "status": {
+            "description": "\"exact\" (pct), \"range\" (rangeLow / rangeHigh; e.g. 95-100 for a published \"95% or more\"), \"suppressed\" (percent withheld by the state, usually for small groups; see source.suppressionNote), \"redactedCount\" (a student count withheld by the state, e.g. \"fewer than 10\": see source.suppressedCountText), \"countOnly\" (a count of students, no percent: see students / studentsTotal) or \"invalid\" (not given: the published value is outside 0-100, qualityFlag 1, or the state's own figures contradict it, e.g. a non-report printed as zeros, qualityFlag 2)",
+            "type": "string"
+          },
+          "pct": {
+            "format": "double",
+            "description": "Percent of students (0-100), as published; status \"exact\" only",
+            "type": "number"
+          },
+          "rangeLow": {
+            "format": "double",
+            "description": "Lower bound of a published range (0-100); status \"range\" only",
+            "type": "number"
+          },
+          "rangeHigh": {
+            "format": "double",
+            "description": "Upper bound of a published range (0-100); status \"range\" only",
+            "type": "number"
+          },
+          "students": {
+            "format": "int32",
+            "description": "Students with this status, when published",
+            "type": "integer"
+          },
+          "studentsTotal": {
+            "format": "int32",
+            "description": "Students the state counted for this figure (enrolled, or with a record on file, or required to have this vaccine, as the state defines it), when published",
+            "type": "integer"
+          },
+          "sector": {
+            "description": "County and state figures: \"public\" or \"private\" when the state published the figure for one sector only (the school's own); absent = all schools",
+            "type": "string"
+          },
+          "qualityFlag": {
+            "format": "int32",
+            "description": "1 = the published value is outside 0-100; 2 = the state's own figures contradict it, e.g. a non-report printed as zeros (status \"invalid\" either way)",
+            "type": "integer"
+          },
+          "notes": {
+            "description": "Ids of the notes (vaccination.notes) that apply to this figure",
+            "type": "array",
+            "items": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "sourceId": {
+            "format": "int32",
+            "description": "Source id when the figure comes from one of vaccination.otherSources; absent = vaccination.source",
+            "type": "integer"
+          }
+        }
+      },
       "APISchoolList31": {
-        "description": "API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome on each school\r\n(SchoolListSD2_API_11 supplies the measure).",
+        "description": "API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome and the vaccination headline on each\r\nschool (SchoolListSD2_API_12: SchoolListSD2_API_11 plus the VaxSchoolSummary columns, issue-76-vax-90).",
         "type": "object",
         "properties": {
           "schoolList": {
-            "description": "The schools that match your query, each with lowIncome",
+            "description": "The schools that match your query, each with lowIncome and vaccination",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/APISchoolSummary31"
@@ -2805,9 +3183,12 @@
         }
       },
       "APISchoolSummary31": {
-        "description": "School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome.",
+        "description": "School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome and the vaccination headline.",
         "type": "object",
         "properties": {
+          "vaccination": {
+            "$ref": "#/components/schemas/APIVaxHeadline"
+          },
           "lowIncome": {
             "$ref": "#/components/schemas/APILowIncome"
           },

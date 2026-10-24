@@ -13,13 +13,6 @@
  */
 
 import { mapValues } from '../runtime';
-import type { APIRankHistory } from './APIRankHistory';
-import {
-    APIRankHistoryFromJSON,
-    APIRankHistoryFromJSONTyped,
-    APIRankHistoryToJSON,
-    APIRankHistoryToJSONTyped,
-} from './APIRankHistory';
 import type { APISchoolFinance } from './APISchoolFinance';
 import {
     APISchoolFinanceFromJSON,
@@ -34,27 +27,13 @@ import {
     APISchoolReviewToJSON,
     APISchoolReviewToJSONTyped,
 } from './APISchoolReview';
-import type { APIGraduationRate } from './APIGraduationRate';
+import type { APIVaccination } from './APIVaccination';
 import {
-    APIGraduationRateFromJSON,
-    APIGraduationRateFromJSONTyped,
-    APIGraduationRateToJSON,
-    APIGraduationRateToJSONTyped,
-} from './APIGraduationRate';
-import type { APIDropoutRate } from './APIDropoutRate';
-import {
-    APIDropoutRateFromJSON,
-    APIDropoutRateFromJSONTyped,
-    APIDropoutRateToJSON,
-    APIDropoutRateToJSONTyped,
-} from './APIDropoutRate';
-import type { APITestScoreWrapper30 } from './APITestScoreWrapper30';
-import {
-    APITestScoreWrapper30FromJSON,
-    APITestScoreWrapper30FromJSONTyped,
-    APITestScoreWrapper30ToJSON,
-    APITestScoreWrapper30ToJSONTyped,
-} from './APITestScoreWrapper30';
+    APIVaccinationFromJSON,
+    APIVaccinationFromJSONTyped,
+    APIVaccinationToJSON,
+    APIVaccinationToJSONTyped,
+} from './APIVaccination';
 import type { APICounty } from './APICounty';
 import {
     APICountyFromJSON,
@@ -76,6 +55,34 @@ import {
     APILowIncomeToJSON,
     APILowIncomeToJSONTyped,
 } from './APILowIncome';
+import type { APIRankHistory } from './APIRankHistory';
+import {
+    APIRankHistoryFromJSON,
+    APIRankHistoryFromJSONTyped,
+    APIRankHistoryToJSON,
+    APIRankHistoryToJSONTyped,
+} from './APIRankHistory';
+import type { APIGraduationRate } from './APIGraduationRate';
+import {
+    APIGraduationRateFromJSON,
+    APIGraduationRateFromJSONTyped,
+    APIGraduationRateToJSON,
+    APIGraduationRateToJSONTyped,
+} from './APIGraduationRate';
+import type { APIDropoutRate } from './APIDropoutRate';
+import {
+    APIDropoutRateFromJSON,
+    APIDropoutRateFromJSONTyped,
+    APIDropoutRateToJSON,
+    APIDropoutRateToJSONTyped,
+} from './APIDropoutRate';
+import type { APITestScoreWrapper30 } from './APITestScoreWrapper30';
+import {
+    APITestScoreWrapper30FromJSON,
+    APITestScoreWrapper30FromJSONTyped,
+    APITestScoreWrapper30ToJSON,
+    APITestScoreWrapper30ToJSONTyped,
+} from './APITestScoreWrapper30';
 import type { APIChronicAbsenteeismRate } from './APIChronicAbsenteeismRate';
 import {
     APIChronicAbsenteeismRateFromJSON,
@@ -100,7 +107,8 @@ import {
 
 /**
  * School detail record for API 3.1 with includeRanges=true: the v3.0 includeRanges record (test-score percents as a
- * number or an APIReportedPercent object) plus lowIncome and the yearly freeReducedLunch / directCertification objects.
+ * number or an APIReportedPercent object) plus lowIncome, the yearly freeReducedLunch / directCertification objects
+ * and vaccination.
  * @export
  * @interface APISchoolFull31Ranges
  */
@@ -109,6 +117,10 @@ export interface APISchoolFull31Ranges {
      * 
      */
     lowIncome?: APILowIncome;
+    /**
+     * 
+     */
+    vaccination?: APIVaccination;
     /**
      * Yearly enrollment, demographics, and staffing for this school, most recent year first. API 3.1 adds freeReducedLunch and directCertification to each year.
      */
@@ -265,6 +277,7 @@ export function APISchoolFull31RangesFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'lowIncome': json['lowIncome'] == null ? undefined : APILowIncomeFromJSON(json['lowIncome']),
+        'vaccination': json['vaccination'] == null ? undefined : APIVaccinationFromJSON(json['vaccination']),
         'schoolYearlyDetails': json['schoolYearlyDetails'] == null ? undefined : ((json['schoolYearlyDetails'] as Array<any>).map(APIYearlyDemographics31FromJSON)),
         'testScores': json['testScores'] == null ? undefined : ((json['testScores'] as Array<any>).map(APITestScoreWrapper30FromJSON)),
         'schoolid': json['schoolid'] == null ? undefined : json['schoolid'],
@@ -314,6 +327,7 @@ export function APISchoolFull31RangesToJSONTyped(value?: APISchoolFull31Ranges |
     return {
         
         'lowIncome': APILowIncomeToJSON(value['lowIncome']),
+        'vaccination': APIVaccinationToJSON(value['vaccination']),
         'schoolYearlyDetails': value['schoolYearlyDetails'] == null ? undefined : ((value['schoolYearlyDetails'] as Array<any>).map(APIYearlyDemographics31ToJSON)),
         'testScores': value['testScores'] == null ? undefined : ((value['testScores'] as Array<any>).map(APITestScoreWrapper30ToJSON)),
         'schoolid': value['schoolid'],

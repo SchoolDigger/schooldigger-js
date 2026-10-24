@@ -22,14 +22,14 @@ import {
 } from './APISchoolSummary31';
 
 /**
- * API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome on each school
- * (SchoolListSD2_API_11 supplies the measure).
+ * API 3.1 school list (/v3.1/schools): the v2.4 / v3.0 list with lowIncome and the vaccination headline on each
+ * school (SchoolListSD2_API_12: SchoolListSD2_API_11 plus the VaxSchoolSummary columns, issue-76-vax-90).
  * @export
  * @interface APISchoolList31
  */
 export interface APISchoolList31 {
     /**
-     * The schools that match your query, each with lowIncome
+     * The schools that match your query, each with lowIncome and vaccination
      */
     schoolList?: Array<APISchoolSummary31>;
     /**

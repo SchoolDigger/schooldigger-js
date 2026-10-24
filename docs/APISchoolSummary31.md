@@ -1,12 +1,13 @@
 
 # APISchoolSummary31
 
-School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome.
+School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome and the vaccination headline.
 
 ## Properties
 
 Name | Type
 ------------ | -------------
+`vaccination` | [APIVaxHeadline](APIVaxHeadline.md)
 `lowIncome` | [APILowIncome](APILowIncome.md)
 `schoolid` | string
 `schoolName` | string
@@ -44,6 +45,7 @@ import type { APISchoolSummary31 } from 'schooldigger'
 
 // TODO: Update the object below with actual values
 const example = {
+  "vaccination": null,
   "lowIncome": null,
   "schoolid": null,
   "schoolName": null,

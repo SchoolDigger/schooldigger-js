@@ -55,13 +55,24 @@ import {
     APILocationToJSON,
     APILocationToJSONTyped,
 } from './APILocation';
+import type { APIVaxHeadline } from './APIVaxHeadline';
+import {
+    APIVaxHeadlineFromJSON,
+    APIVaxHeadlineFromJSONTyped,
+    APIVaxHeadlineToJSON,
+    APIVaxHeadlineToJSONTyped,
+} from './APIVaxHeadline';
 
 /**
- * School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome.
+ * School record in an API 3.1 school list: the v2.4 / v3.0 list record plus lowIncome and the vaccination headline.
  * @export
  * @interface APISchoolSummary31
  */
 export interface APISchoolSummary31 {
+    /**
+     * 
+     */
+    vaccination?: APIVaxHeadline;
     /**
      * 
      */
@@ -197,6 +208,7 @@ export function APISchoolSummary31FromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
+        'vaccination': json['vaccination'] == null ? undefined : APIVaxHeadlineFromJSON(json['vaccination']),
         'lowIncome': json['lowIncome'] == null ? undefined : APILowIncomeFromJSON(json['lowIncome']),
         'schoolid': json['schoolid'] == null ? undefined : json['schoolid'],
         'schoolName': json['schoolName'] == null ? undefined : json['schoolName'],
@@ -240,6 +252,7 @@ export function APISchoolSummary31ToJSONTyped(value?: APISchoolSummary31 | null,
 
     return {
         
+        'vaccination': APIVaxHeadlineToJSON(value['vaccination']),
         'lowIncome': APILowIncomeToJSON(value['lowIncome']),
         'schoolid': value['schoolid'],
         'schoolName': value['schoolName'],
