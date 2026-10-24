@@ -45,7 +45,7 @@ jobs:
             -i openapi-patched.json \
             -g typescript-fetch \
             -o . \
-            --additional-properties=npmName=schooldigger,npmVersion=${{ github.event.inputs.version }},supportsES6=true
+            --additional-properties=npmName=schooldigger,npmVersion=${{ github.event.inputs.version }},supportsES6=true,gitUserId=SchoolDigger,gitRepoId=schooldigger-js
 
       - name: Build
         run: |
