@@ -42,6 +42,7 @@ console.log(`Enrollment: ${detail.schoolYearlyDetails[0].numberOfStudents}`);
 | `DistrictsApi` | `searchDistricts()`, `getDistrict()` |
 | `RankingsApi` | `getSchoolRankings()`, `getDistrictRankings()` |
 | `AutocompleteApi` | `autocompleteSchools()`, `autocompleteDistricts()` |
+| `BatchClient` | `submitBatch()`, `getBatch()`, `getBatchResults()`, `waitForBatch()`, `cancelBatch()` (see [Batch requests](#batch-requests-sdk-32)) |
 
 ## Test scores in API 3.0
 
@@ -129,6 +130,38 @@ else {
 
 District endpoints are unchanged. See
 [Vaccination rates](https://developer.schooldigger.com/data-quality#vaccination).
+
+## Batch requests (SDK 3.2)
+
+The [async batch API](https://developer.schooldigger.com/batch-requests-schooldigger-api) runs up to
+2,000 API GET calls for you, paced at half your plan's per-minute limit, and returns the results in
+parts of 20. Each item counts as one API call; submitting, polling and downloading are free. Paid
+plans only. `BatchClient` wraps it (Node 18+ or any runtime with `fetch`):
+
+```ts
+import { BatchClient, BatchError } from 'schooldigger';
+
+const client = new BatchClient({ appID: 'YOUR_APP_ID', appKey: 'YOUR_APP_KEY' }); // or new BatchClient(config)
+const batch = await client.submitBatch(
+  ['530792001309', '530792003116'].map(id => ({ id, path: `/v3.1/schools/${id}` })) // plain path strings work too
+);
+for await (const { part, results } of client.waitForBatch(batch.batchId)) { // polls with Retry-After
+  for (const r of results) console.log(r.id, r.status, r.body?.schoolName);   // {id, path, status, body}
+}
+```
+
+| Method | Route |
+|--------|-------|
+| `submitBatch(items, { callbackUrl })` | `POST /batches` (returns `batchId`, `partCount`, ...) |
+| `getBatch(batchId)` | `GET /batches/{batchId}` (status, `partsReady`, ...) |
+| `getBatchResults(batchId, part)` | `GET /batches/{batchId}/results?part=N`, decoded NDJSON |
+| `cancelBatch(batchId)` | `DELETE /batches/{batchId}` |
+| `waitForBatch(batchId, { timeoutMs })` | async generator: yields each part as it becomes ready; throws `BatchNotCompletedError` if the batch ends `failed`, `canceled` or `expired` |
+
+`body` is the plain JSON the same GET returns (not a model class). Error responses throw
+`BatchError` with `status`, `message`, `description` and, for a rejected submit, `errors`.
+To check a callback's `X-SchoolDigger-Signature` header, pass the raw request body to
+`await verifySignature(rawBody, header, appKey)` (Web Crypto).
 
 ## Authentication
 

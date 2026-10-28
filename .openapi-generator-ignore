@@ -2,3 +2,9 @@ README.md
 LICENSE
 .github/**
 .gitignore
+
+# Hand-written batch helpers (src/batch.ts) and the barrel that re-exports them.
+# src/index.ts is a fixed 3-line barrel; keep its last line: export * from './batch';
+src/batch.ts
+src/index.ts
+test/**

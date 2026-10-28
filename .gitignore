@@ -4,3 +4,6 @@ dist/
 *.d.ts
 *.js.map
 !api.ts
+
+# Hand-written tests (the *.js rule above is for build output)
+!test/*.js
